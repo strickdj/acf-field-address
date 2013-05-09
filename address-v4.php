@@ -525,16 +525,30 @@ class acf_field_address extends acf_field
 	}
 
 
-  function format_value( $value, $post_id, $field ) {
+  function load_value( $value, $post_id, $field ) {
 
-    $components = $field[ 'address_components' ];
+    if (is_array( $value ) && (
+      array_key_exists('address1', $value) ||
+      array_key_exists('address2', $value) ||
+      array_key_exists('address3', $value) ||
+      array_key_exists('city', $value) ||
+      array_key_exists('state', $value) ||
+      array_key_exists('postal_code', $value) ||
+      array_key_exists('country', $value)
+    )) {
 
-    $defaults = array();
-    foreach( $components as $name => $settings )
-      $defaults[ $name ] = $settings[ 'default_value' ];
+    } else {
+      $components = $field[ 'address_components' ];
 
-    $value = do_action('afc/load_value', $value, $post_id, $field);
-    $value = wp_parse_args($value, $defaults);
+      $defaults = array();
+      foreach( $components as $name => $settings ) {
+        $defaults[ $name ] = $settings[ 'default_value' ];
+      }
+
+      $value = do_action('afc/load_value', $value, $post_id, $field);
+      $value = wp_parse_args($value, $defaults);
+
+    }
 
     return $value;
   }
@@ -545,7 +559,7 @@ class acf_field_address extends acf_field
     $components = $field[ 'address_components' ];
     $layout = $field[ 'address_layout' ];
 
-    $values = $this->format_value( $value, $post_id, $field );
+    $values = $this->load_value( $value, $post_id, $field);
 
     $output = '';
     foreach( $layout as $layout_row ) {
@@ -565,7 +579,6 @@ class acf_field_address extends acf_field
 
     return $output;
   }
-
 	
 }
 
