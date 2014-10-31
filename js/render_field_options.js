@@ -1,6 +1,55 @@
 jQuery(document).ready(function($) {
 
-  console.log('init');
+  var initSortables = function($element) {
+
+    // Declare them as sortable widgets
+    // the connectWith property allows us to link them together
+    // the stop property is a function callback that is called whenever the sorting event ends
+    $element.sortable({
+      connectWith: ".sim_grid_row",
+      stop: setGridPositions
+    }).disableSelection(); // we dont want the sortable elements to be selectable
+
+  };
+
+  var setGridPositions = function() {
+
+    $('.sim_grid_row').each(function(rowIndex, row) {
+
+      $(row).find('li').each(function(col, item) {
+
+        // convert item to a jQuery object and store it so we can use it later
+        var $item = $(item);
+
+        // create a position object that holds the row and column values
+        var position = {
+          col: col,
+          row: rowIndex
+        };
+
+        // set the data properties col and row to the corresponding values
+        // note: jQuery.data() does not update the dom with the values
+        // it only updates the internal jQuery object
+        $item.data(position);
+
+        // save the position of this element in our positions container
+        positions[$item.data('item')] = position;
+
+      });
+
+    });
+
+    $('#sim_layout_position').attr('value', JSON.stringify(positions));
+
+  };
+
+  // If our sim_grid_row 's are initially on the page we need to initialize them
+  $('#sim_grid').find('.sim_grid_row').each(function (index, el) {
+    initSortables($(el));
+  });
+
+  // create a container that will hold the positions of all the grid elements
+  var positions = {};
 
   // Acf allows us to add an action to whenever it adds something to the dom
   // In this case we want to initialize our sortable ui when it loads our field markup
@@ -11,52 +60,10 @@ jQuery(document).ready(function($) {
 
       // Get a reference to our sortable lists "ul" elements
       var $sortables = $el.find('.sim_grid_row');
-
-      // create a container that will hold the positions of all the grid elements
-      var positions = {};
-
-
-      var setGridPositions = function() {
-
-        $('.sim_grid_row').each(function(rowIndex, row) {
-
-          $(row).find('li').each(function(col, item) {
-
-            // convert item to a jQuery object and store it so we can use it later
-            var $item = $(item);
-
-            // create a position object that holds the row and column values
-            var position = {
-              col: col,
-              row: rowIndex
-            };
-
-            // set the data properties col and row to the corresponding values
-            // note: jQuery.data() does not update the dom with the values
-            // it only updates the internal jQuery object
-            $item.data(position);
-
-            // save the position of this element in our positions container
-            positions[$item.data('item')] = position;
-
-          });
-
-        });
-
-        $('#sim_layout_position').attr('value', JSON.stringify(positions));
-
-      };
+      initSortables($sortables);
 
       // initialize grid positions
       setGridPositions();
-
-      // Declare them as sortable widgets
-      // the connectWith property allows us to link them together
-      // the stop property is a function callback that is called whenever the sorting event ends
-      $sortables.sortable({
-        connectWith: ".sim_grid_row",
-        stop: setGridPositions
-      }).disableSelection(); // we dont want the sortable elements to be selectable
 
 
       // We need to add or remove the items based on their enabled status

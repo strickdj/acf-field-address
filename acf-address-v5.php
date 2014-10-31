@@ -22,22 +22,22 @@ class acf_field_address extends acf_field {
 		$this->defaults = array(
 			'output_type' => 'html',
 			'address_layout' => array(
-				0 => array(
+				'line1' => array(
 					0 => array(
 						'label' => __('Street 1', 'acf-address'),
 						'id' => 'street1',
 					) ),
-				1 => array(
+				'line2' => array(
 					0 => array(
 						'label' => __('Street 2', 'acf-address'),
 						'id' => 'street2',
 					) ),
-				2 => array(
+				'line3' => array(
 					0 => array(
 						'label' => __('Street 3', 'acf-address'),
 						'id' => 'street3',
 					) ),
-				3 => array(
+				'line4' => array(
 					0 => array(
 						'label' => __('City', 'acf-address'),
 						'id' => 'city',
@@ -55,7 +55,7 @@ class acf_field_address extends acf_field {
 						'id' => 'country',
 					)
 				),
-				4 => array()
+				'not_displayed' => array()
 			),
 			'address_parts' => array(
 				'street1'    => array(
@@ -135,6 +135,8 @@ class acf_field_address extends acf_field {
 	public function render_field_settings( $field )
 	{
 
+		$post_id = $field['ID'];
+
 		/*
 		*  acf_render_field_setting
 		*
@@ -193,11 +195,11 @@ class acf_field_address extends acf_field {
 					?>
 					<tr>
 						<td><?php echo $component; ?></td>
-						<td><input name="acf_fields[5][output_type][enabled]" type="checkbox" value="<?php echo $component; ?>" <?php echo $checked; ?>></td>
-						<td><input name="acf_fields[5][output_type][label]" type="text" value="<?php echo $settings['label']; ?>"></td>
-						<td><input name="acf_fields[5][output_type][default_value]" type="text" value="<?php echo $settings['default_value']; ?>"></td>
-						<td><input name="acf_fields[5][output_type][class]" type="text" value="<?php echo $settings['class']; ?>"></td>
-						<td><input name="acf_fields[5][output_type][separator]" type="text" value="<?php echo $settings['separator']; ?>"></td>
+						<td><input name="sim_address_field[address_parts][enabled]" type="checkbox" value="<?php echo $component; ?>" <?php echo $checked; ?>></td>
+						<td><input name="sim_address_field[address_parts][label]" type="text" value="<?php echo $settings['label']; ?>"></td>
+						<td><input name="sim_address_field[address_parts][default_value]" type="text" value="<?php echo $settings['default_value']; ?>"></td>
+						<td><input name="sim_address_field[address_parts][class]" type="text" value="<?php echo $settings['class']; ?>"></td>
+						<td><input name="sim_address_field[address_parts][separator]" type="text" value="<?php echo $settings['separator']; ?>"></td>
 					</tr>
 					<?php
 
@@ -214,7 +216,7 @@ class acf_field_address extends acf_field {
 				<p class="description">Drag and Drop to arrange the address as desired.</p>
 			</td>
 			<td class="acf-input">
-				<input id="sim_layout_position" type="text" name="acf_fields[5][address_layout]" value="">
+				<input id="sim_layout_position" name="sim_address_field[address_layout]" type="text" value="">
 
 				<div id="sim_grid">
 
@@ -233,7 +235,7 @@ class acf_field_address extends acf_field {
 							<?php
 							foreach($row_layout as $col => $address_part_index) {
 								?>
-								<li class="item" data-item="<?php echo $address_part_index['id']; ?>" data-row="<?php echo $row; ?>" data-col="<?php echo $col; ?>">
+								<li class="item" data-item="<?php echo $address_part_index['id']; ?>">
 									<?php echo $address_part_index['label']; ?>
 								</li>
 							<?php } ?>
@@ -324,26 +326,7 @@ class acf_field_address extends acf_field {
 	*/
 	
 	
-	/*
-	*  input_admin_head()
-	*
-	*  This action is called in the admin_head action on the edit screen where your field is created.
-	*  Use this action to add CSS and JavaScript to assist your render_field() action.
-	*
-	*  @type	action (admin_head)
-	*  @since	3.6
-	*  @date	23/01/13
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
 
-		
-	function input_admin_head() {
-	
-//		echo 'fooo barrr';
-		
-	}
 
 	
 	
@@ -419,8 +402,7 @@ class acf_field_address extends acf_field {
 
 		$dir = plugin_dir_url( __FILE__ );
 
-
-		// Make sure that jquery ui sortable is enqueued
+		// Ensure that jquery ui sortable is enqueued
 		wp_enqueue_script('jquery-ui-sortable');
 
 		// register & include JS

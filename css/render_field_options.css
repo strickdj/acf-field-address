@@ -9,6 +9,7 @@
   min-height: 50px;
 }
 #sim_grid ul.sim_grid_row li.item {
+  cursor: move;
   display: inline-block;
   text-align: center;
   background: #ffffff;
