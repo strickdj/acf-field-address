@@ -7,22 +7,14 @@ jQuery(document).ready(function($) {
   if( typeof acf.add_action !== 'undefined' ) {
     acf.add_action('append', function( $el ){
 
-      // We are creating 5 linked sortable lists with jquery ui sortable
-      var $sortables = $el.find('.sim_sortable');
+      var $grid = $el.find('#sim_grid');
 
-      $(".gridster ul").gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [45, 32],
-        max_cols: 6,
-        avoid_overlapped_widgets: true,
-        autogenerate_stylesheet: true,
-        widget_selector: 'li',
-        helper: 'clone',
-        min_rows: 5,
-        resize: {
-          enabled: true
-        }
-      });
+      // We are creating 5 linked sortable lists with jquery ui sortable
+      var $sortables = $grid.find('.sim_grid_row');
+
+      $sortables.sortable({
+        connectWith: ".sim_grid_row"
+      }).disableSelection();
 
 
       // We need to do something every time a checkbox in our settings area is checked

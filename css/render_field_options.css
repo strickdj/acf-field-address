@@ -4,6 +4,19 @@
 .gridster ul li {
   border: 1px solid #444444;
 }
+#sim_grid ul.sim_grid_row {
+  background: #444444;
+  min-height: 50px;
+}
+#sim_grid ul.sim_grid_row li.item {
+  display: inline-block;
+  text-align: center;
+  background: #ffffff;
+  min-height: 30px;
+  min-width: 42px;
+  margin: 5px;
+  padding: 5px;
+}
 /*! jQuery UI - v1.11.2 - 2014-10-30
 * http://jqueryui.com
 * Includes: core.css, draggable.css, sortable.css

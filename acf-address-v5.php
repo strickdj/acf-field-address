@@ -229,27 +229,23 @@ class acf_field_address extends acf_field {
 			<td class="acf-input">
 				<input type="text" name="acf_fields[5][address_layout]">
 
-				<div class="gridster">
-
-						<ul>
+				<div id="sim_grid">
 
 							<?php
 							$line = 0;
 							foreach($field['address_layout'] as $row => $row_layout) {
 								$line++;
-
-								foreach($row_layout as $col => $address_part_index){
+								?>
+								<ul class="sim_grid_row">
+								<?php
+								foreach($row_layout as $col => $address_part_index) {
 									?>
 									<li class="item" data-item="<?php echo $address_part_index['id']; ?>" data-row="<?php echo $row; ?>" data-col="<?php echo $col; ?>" data-sizex="<?php echo $address_part_index['sizex']; ?>" data-sizey="<?php echo $address_part_index['sizey']; ?>">
 										<?php echo $address_part_index['label']; ?>
-										<span class="gs-resize-handle gs-resize-handle-both"></span>
 									</li>
-								<?php
-								}
-
-							} ?>
-
-						</ul>
+								<?php } ?>
+								</ul>
+							<?php } ?>
 
 				</div>
 
@@ -432,14 +428,11 @@ class acf_field_address extends acf_field {
 
 
 		// Make sure that jquery ui sortable is enqueued
-//		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script('jquery-ui-sortable');
 
 		// register & include JS
 		wp_register_script( 'render_field_options', "{$dir}js/render_field_options.js" );
 		wp_enqueue_script('render_field_options');
-
-		wp_register_script( 'gridster', "{$dir}js/gridster.js" );
-		wp_enqueue_script('gridster');
 
 		// register & include CSS
 		wp_register_style( 'render_field_options', "{$dir}css/render_field_options.css" );
