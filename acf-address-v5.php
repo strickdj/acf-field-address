@@ -26,49 +26,36 @@ class acf_field_address extends acf_field {
 					0 => array(
 						'label' => __('Street 1', 'acf-address'),
 						'id' => 'street1',
-						'sizex' => 6,
-						'sizey' => 1
 					) ),
 				1 => array(
 					0 => array(
 						'label' => __('Street 2', 'acf-address'),
 						'id' => 'street2',
-						'sizex' => 6,
-						'sizey' => 1
 					) ),
 				2 => array(
 					0 => array(
 						'label' => __('Street 3', 'acf-address'),
 						'id' => 'street3',
-						'sizex' => 6,
-						'sizey' => 1
 					) ),
 				3 => array(
 					0 => array(
 						'label' => __('City', 'acf-address'),
 						'id' => 'city',
-						'sizex' => 1,
-						'sizey' => 1
 					),
 					1 => array(
 						'label' => __('State', 'acf-address'),
 						'id' => 'state',
-						'sizex' => 1,
-						'sizey' => 1
 					),
 					2 => array(
 						'label' => __('Postal Code', 'acf-address'),
-						'id' => 'zip',
-						'sizex' => 1,
-						'sizey' => 1
+						'id' => 'postal_code',
 					),
 					3 => array(
 						'label' => __('Country', 'acf-address'),
 						'id' => 'country',
-						'sizex' => 1,
-						'sizey' => 1
 					)
 				),
+				4 => array()
 			),
 			'address_parts' => array(
 				'street1'    => array(
@@ -227,25 +214,31 @@ class acf_field_address extends acf_field {
 				<p class="description">Drag and Drop to arrange the address as desired.</p>
 			</td>
 			<td class="acf-input">
-				<input type="text" name="acf_fields[5][address_layout]">
+				<input id="sim_layout_position" type="text" name="acf_fields[5][address_layout]" value="">
 
 				<div id="sim_grid">
 
+					<?php
+					$line = 0;
+					foreach($field['address_layout'] as $row => $row_layout) {
+						$line++;
+
+						if ( $line < 5 ) {
+							printf("<label>Line %u</label>", $line);
+						} elseif ( $line === 5 ) {
+							_e('Not Displayed', 'acf-address');
+						}
+						?>
+						<ul class="sim_grid_row">
 							<?php
-							$line = 0;
-							foreach($field['address_layout'] as $row => $row_layout) {
-								$line++;
+							foreach($row_layout as $col => $address_part_index) {
 								?>
-								<ul class="sim_grid_row">
-								<?php
-								foreach($row_layout as $col => $address_part_index) {
-									?>
-									<li class="item" data-item="<?php echo $address_part_index['id']; ?>" data-row="<?php echo $row; ?>" data-col="<?php echo $col; ?>" data-sizex="<?php echo $address_part_index['sizex']; ?>" data-sizey="<?php echo $address_part_index['sizey']; ?>">
-										<?php echo $address_part_index['label']; ?>
-									</li>
-								<?php } ?>
-								</ul>
+								<li class="item" data-item="<?php echo $address_part_index['id']; ?>" data-row="<?php echo $row; ?>" data-col="<?php echo $col; ?>">
+									<?php echo $address_part_index['label']; ?>
+								</li>
 							<?php } ?>
+						</ul>
+					<?php } ?>
 
 				</div>
 
