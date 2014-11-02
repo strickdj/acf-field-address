@@ -1,200 +1,97 @@
-.gridster ul {
-  border: 1px solid #444444;
+.acfAddressWidget input {
+  width: 100%;
 }
-.gridster ul li {
-  border: 1px solid #444444;
-}
-#sim_grid ul.sim_grid_row {
-  background: #444444;
+.acfAddressWidget ul {
+  display: block;
   min-height: 50px;
+  background: #444444;
 }
-#sim_grid ul.sim_grid_row li.item {
-  cursor: move;
-  display: inline-block;
-  text-align: center;
-  background: #ffffff;
-  min-height: 30px;
-  min-width: 42px;
-  margin: 5px;
+.acfAddressWidget ul:last-child {
+  opacity: .7;
+}
+.acfAddressWidget ul:last-child li {
+  opacity: .7;
+}
+.acfAddressWidget ul li {
   padding: 5px;
+  margin: 5px;
+  cursor: move;
+  background: #ffffff;
+  list-style-type: none;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
 }
-/*! jQuery UI - v1.11.2 - 2014-10-30
-* http://jqueryui.com
-* Includes: core.css, draggable.css, sortable.css
-* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
-/* Layout helpers
-----------------------------------*/
-.ui-helper-hidden {
-  display: none;
+.acfAddressWidget table {
+  background-color: #fefefe;
 }
-.ui-helper-hidden-accessible {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+.acfAddressWidget th {
+  text-align: left;
 }
-.ui-helper-reset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  line-height: 1.3;
-  text-decoration: none;
-  font-size: 100%;
-  list-style: none;
-}
-.ui-helper-clearfix:before,
-.ui-helper-clearfix:after {
-  content: "";
-  display: table;
-  border-collapse: collapse;
-}
-.ui-helper-clearfix:after {
-  clear: both;
-}
-.ui-helper-clearfix {
-  min-height: 0;
-  /* support: IE7 */
-}
-.ui-helper-zfix {
+.acfAddressWidget table {
   width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  /* support: IE8 */
+  max-width: 100%;
+  margin-bottom: 10px;
 }
-.ui-front {
-  z-index: 100;
+.acfAddressWidget table > thead > tr > th,
+.acfAddressWidget table > tbody > tr > th,
+.acfAddressWidget table > tfoot > tr > th,
+.acfAddressWidget table > thead > tr > td,
+.acfAddressWidget table > tbody > tr > td,
+.acfAddressWidget table > tfoot > tr > td {
+  padding: 3px;
+  line-height: 25px;
+  vertical-align: top;
+  border-top: 1px solid #444444;
 }
-/* Interaction Cues
-----------------------------------*/
-.ui-state-disabled {
-  cursor: default !important;
+.acfAddressWidget table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #444444;
 }
-/* Icons
-----------------------------------*/
-/* states and images */
-.ui-icon {
-  display: block;
-  text-indent: -99999px;
-  overflow: hidden;
-  background-repeat: no-repeat;
+.acfAddressWidget table > caption + thead > tr:first-child > th,
+.acfAddressWidget table > colgroup + thead > tr:first-child > th,
+.acfAddressWidget table > thead:first-child > tr:first-child > th,
+.acfAddressWidget table > caption + thead > tr:first-child > td,
+.acfAddressWidget table > colgroup + thead > tr:first-child > td,
+.acfAddressWidget table > thead:first-child > tr:first-child > td {
+  border-top: 0;
 }
-/* Misc visuals
-----------------------------------*/
-/* Overlays */
-.ui-widget-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.acfAddressWidget table > tbody + tbody {
+  border-top: 2px solid #444444;
 }
-.ui-draggable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
+.acfAddressWidget table .table {
+  background-color: #ffffff;
 }
-.ui-sortable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
+.acfAddressWidget table col[class*="col-"] {
+  position: static;
+  float: none;
+  display: table-column;
 }
-/*!
- * jQuery UI CSS Framework 1.11.2
- * http://jqueryui.com
- *
- * Copyright 2014 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/category/theming/
- */
-/* Layout helpers
-----------------------------------*/
-.ui-helper-hidden {
-  display: none;
+.acfAddressWidget table td[class*="col-"],
+.acfAddressWidget table th[class*="col-"] {
+  position: static;
+  float: none;
+  display: table-cell;
 }
-.ui-helper-hidden-accessible {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-.ui-helper-reset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  line-height: 1.3;
-  text-decoration: none;
-  font-size: 100%;
-  list-style: none;
-}
-.ui-helper-clearfix:before,
-.ui-helper-clearfix:after {
-  content: "";
-  display: table;
-  border-collapse: collapse;
-}
-.ui-helper-clearfix:after {
-  clear: both;
-}
-.ui-helper-clearfix {
-  min-height: 0;
-  /* support: IE7 */
-}
-.ui-helper-zfix {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  /* support: IE8 */
-}
-.ui-front {
-  z-index: 100;
-}
-/* Interaction Cues
-----------------------------------*/
-.ui-state-disabled {
-  cursor: default !important;
-}
-/* Icons
-----------------------------------*/
-/* states and images */
-.ui-icon {
-  display: block;
-  text-indent: -99999px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-}
-/* Misc visuals
-----------------------------------*/
-/* Overlays */
-.ui-widget-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.ui-draggable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
-}
-.ui-sortable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
+@media screen and (max-width: 768px) {
+  .acfAddressWidget table {
+    width: 100%;
+    margin-bottom: 7.5px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #444444;
+    -webkit-overflow-scrolling: touch;
+  }
+  .acfAddressWidget table > .table {
+    margin-bottom: 0;
+  }
+  .acfAddressWidget table > .table > thead > tr > th,
+  .acfAddressWidget table > .table > tbody > tr > th,
+  .acfAddressWidget table > .table > tfoot > tr > th,
+  .acfAddressWidget table > .table > thead > tr > td,
+  .acfAddressWidget table > .table > tbody > tr > td,
+  .acfAddressWidget table > .table > tfoot > tr > td {
+    white-space: nowrap;
+  }
 }

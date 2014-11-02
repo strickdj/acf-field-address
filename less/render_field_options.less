@@ -1,231 +1,165 @@
-.gridster {
+// colors
+@table-bg: #fefefe;
+@table-border-color: #444;
+@body-bg: #ffffff;
+
+
+@table-cell-padding: 3px;
+
+@line-height-base: 25px;
+@line-height-computed: 10px;
+@screen-xs-max: 768px;
+
+.acfAddressWidget {
+
+  input {
+    width: 100%;
+  }
 
   ul {
-    border: 1px solid #444444;
+    display: block;
+    min-height: 50px;
+    background: #444444;
+
+    &:last-child {
+      opacity: .7;
+
+      li {
+        opacity: .7;
+      }
+    }
 
     li {
-      border: 1px solid #444444;
-    }
-  }
-}
-
-#sim_grid {
-
-  ul.sim_grid_row {
-    background: #444444;
-    min-height: 50px;
-
-    li.item {
-      cursor: move;
-      display: inline-block;
-      text-align: center;
-      background: #ffffff;
-      min-height: 30px;
-      min-width: 42px;
-      margin: 5px;
       padding: 5px;
+      margin: 5px;
+      cursor: move;
+      background: #ffffff;
+      list-style-type: none;
+      display: inline-block;
+      min-width: 70px;
+      text-align: center;
     }
 
   }
 
-}
 
 
-/*! jQuery UI - v1.11.2 - 2014-10-30
-* http://jqueryui.com
-* Includes: core.css, draggable.css, sortable.css
-* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
+  //
+  // Tables
+  // --------------------------------------------------
 
-/* Layout helpers
-----------------------------------*/
-.ui-helper-hidden {
-  display: none;
-}
-.ui-helper-hidden-accessible {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-.ui-helper-reset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  line-height: 1.3;
-  text-decoration: none;
-  font-size: 100%;
-  list-style: none;
-}
-.ui-helper-clearfix:before,
-.ui-helper-clearfix:after {
-  content: "";
-  display: table;
-  border-collapse: collapse;
-}
-.ui-helper-clearfix:after {
-  clear: both;
-}
-.ui-helper-clearfix {
-  min-height: 0; /* support: IE7 */
-}
-.ui-helper-zfix {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  opacity: 0;
-  filter:Alpha(Opacity=0); /* support: IE8 */
-}
-
-.ui-front {
-  z-index: 100;
-}
+  table {
+    background-color: @table-bg;
+  }
+  th {
+    text-align: left;
+  }
 
 
-/* Interaction Cues
-----------------------------------*/
-.ui-state-disabled {
-  cursor: default !important;
-}
+  // Baseline styles
+
+  table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: @line-height-computed;
+    // Cells
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding: @table-cell-padding;
+          line-height: @line-height-base;
+          vertical-align: top;
+          border-top: 1px solid @table-border-color;
+        }
+      }
+    }
+    // Bottom align for column headings
+    > thead > tr > th {
+      vertical-align: bottom;
+      border-bottom: 2px solid @table-border-color;
+    }
+    // Remove top border from thead by default
+    > caption + thead,
+    > colgroup + thead,
+    > thead:first-child {
+      > tr:first-child {
+        > th,
+        > td {
+          border-top: 0;
+        }
+      }
+    }
+    // Account for multiple tbody instances
+    > tbody + tbody {
+      border-top: 2px solid @table-border-color;
+    }
+
+    // Nesting
+    .table {
+      background-color: @body-bg;
+    }
+  }
 
 
-/* Icons
-----------------------------------*/
 
-/* states and images */
-.ui-icon {
-  display: block;
-  text-indent: -99999px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-}
+  // Table cell sizing
+  //
+  // Reset default table behavior
 
-
-/* Misc visuals
-----------------------------------*/
-
-/* Overlays */
-.ui-widget-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.ui-draggable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
-}
-.ui-sortable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
-}
+  table col[class*="col-"] {
+    position: static; // Prevent border hiding in Firefox and IE9/10 (see https://github.com/twbs/bootstrap/issues/11623)
+    float: none;
+    display: table-column;
+  }
+  table {
+    td,
+    th {
+      &[class*="col-"] {
+        position: static; // Prevent border hiding in Firefox and IE9/10 (see https://github.com/twbs/bootstrap/issues/11623)
+        float: none;
+        display: table-cell;
+      }
+    }
+  }
 
 
-/*!
- * jQuery UI CSS Framework 1.11.2
- * http://jqueryui.com
- *
- * Copyright 2014 jQuery Foundation and other contributors
- * Released under the MIT license.
- * http://jquery.org/license
- *
- * http://api.jqueryui.com/category/theming/
- */
+  // Responsive tables
+  //
+  // Wrap your tables in `.table-responsive` and we'll make them mobile friendly
+  // by enabling horizontal scrolling. Only applies <768px. Everything above that
+  // will display normally.
 
-/* Layout helpers
-----------------------------------*/
-.ui-helper-hidden {
-  display: none;
-}
-.ui-helper-hidden-accessible {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-.ui-helper-reset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  line-height: 1.3;
-  text-decoration: none;
-  font-size: 100%;
-  list-style: none;
-}
-.ui-helper-clearfix:before,
-.ui-helper-clearfix:after {
-  content: "";
-  display: table;
-  border-collapse: collapse;
-}
-.ui-helper-clearfix:after {
-  clear: both;
-}
-.ui-helper-clearfix {
-  min-height: 0; /* support: IE7 */
-}
-.ui-helper-zfix {
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  opacity: 0;
-  filter:Alpha(Opacity=0); /* support: IE8 */
-}
+  table {
+    @media screen and (max-width: @screen-xs-max) {
+      width: 100%;
+      margin-bottom: (@line-height-computed * 0.75);
+      overflow-y: hidden;
+      overflow-x: auto;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      border: 1px solid @table-border-color;
+      -webkit-overflow-scrolling: touch;
 
-.ui-front {
-  z-index: 100;
-}
+      // Tighten up spacing
+      > .table {
+        margin-bottom: 0;
 
+        // Ensure the content doesn't wrap
+        > thead,
+        > tbody,
+        > tfoot {
+          > tr {
+            > th,
+            > td {
+              white-space: nowrap;
+            }
+          }
+        }
+      }
 
-/* Interaction Cues
-----------------------------------*/
-.ui-state-disabled {
-  cursor: default !important;
-}
+    }
+  }
 
-
-/* Icons
-----------------------------------*/
-
-/* states and images */
-.ui-icon {
-  display: block;
-  text-indent: -99999px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-}
-
-
-/* Misc visuals
-----------------------------------*/
-
-/* Overlays */
-.ui-widget-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.ui-draggable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
-}
-.ui-sortable-handle {
-  -ms-touch-action: none;
-  touch-action: none;
 }

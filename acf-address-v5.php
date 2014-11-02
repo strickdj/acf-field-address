@@ -216,9 +216,9 @@ class acf_field_address extends acf_field {
 				<p class="description">Drag and Drop to arrange the address as desired.</p>
 			</td>
 			<td class="acf-input">
-				<input id="sim_layout_position" name="sim_address_field[address_layout]" type="text" value="">
+				<input class="sim_layout_position" name="sim_address_field[address_layout]" type="text" value="">
 
-				<div id="sim_grid">
+				<div class="sim_grid">
 
 					<?php
 					$line = 0;
