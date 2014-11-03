@@ -36,7 +36,9 @@
       layout: settings.layout,
       rowClass: settings.rowClass,
       sortableElement: settings.sortableElement,
-      $inputElement: null,
+      $inputElement: $('<input type="hidden">')
+        .prop('name', 'acfAddressWidget[' + settings.fieldKey + '][address_layout]')
+        .prop('value', JSON.stringify(settings.layout)),
       $detachedEls: {}
     };
 
@@ -147,8 +149,6 @@
 
     var buildLayout = function() {
 
-      closure.$inputElement = $('<input type="text">').uniqueId();
-
       closure.$el.append(closure.$inputElement);
 
       $(closure.layout).each(function(row, items) {
@@ -209,7 +209,10 @@
     // closure scope so its absolutely clear
     var self = {
       $element: $el,
-      $inputElement: $('<input type="text">').data('val', settings.options).prop('value', JSON.stringify(settings.options)),
+      $inputElement: $('<input type="hidden">')
+        .data('val', settings.options)
+        .prop('value', JSON.stringify(settings.options))
+        .prop('name', 'acfAddressWidget[' + settings.fieldKey + '][address_options]'),
       options: settings.options,
       onBlur: onBlurWithAfter,
       onCheck: onCheckWithAfter
@@ -233,7 +236,7 @@
     }
 
     var makeInput = function ( type, value, data ) {
-      var $input = $('<input type="button">')
+      var $input = $('<input type="hidden">')
         .val(value)
         .data(data);
 
@@ -305,11 +308,25 @@
     $this.each(function(index, element) {
 
       var $element = $(element);
+
+      if( $element.data('acfAddressWidgetized') === true ) {
+        return;
+      }
+
+      $element.data('acfAddressWidgetized', true);
+
       var $optionsContainer = $('<div></div>').attr('id', 'options-container');
       var $layoutContainer = $('<div></div>').attr('id', 'layout-container');
 
       $element.append($optionsContainer)
         .append($layoutContainer);
+
+      settings.fieldKey = $element.data('field');
+
+      settings.layout = window.acfAddressWidgetData.address_layout;
+
+      settings.options = window.acfAddressWidgetData.address_options;
+
 
       var lc = makeLayout( settings, $layoutContainer );
 
