@@ -1,2 +1,4 @@
 config.codekit
 .codekit-cache
+.idea
+.DS_Store
