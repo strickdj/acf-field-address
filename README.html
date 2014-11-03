@@ -1,0 +1,40 @@
+<h1>ACF Address Field</h1>
+
+<p>A field to hold an address: street, city, state, country</p>
+
+<hr />
+
+<h3>Compatibility</h3>
+
+<p>This ACF field type is compatible with:
+* ACF 5
+* ACF 4</p>
+
+<h3>Installation</h3>
+
+<ol>
+<li>Copy the <code>acf-FIELD_NAME</code> folder into your <code>wp-content/plugins</code> folder</li>
+<li>Activate the FIELD_LABEL plugin via the plugins admin page</li>
+<li>Create a new field via ACF and select the FIELD_LABEL type</li>
+<li>Please refer to the description for more info regarding the field type settings</li>
+</ol>
+
+
+<h3>Structure</h3>
+
+<ul>
+<li><code>/css</code>:  folder for .css files.</li>
+<li><code>/images</code>: folder for image files</li>
+<li><code>/js</code>: folder for .js files</li>
+<li><code>/lang</code>: folder for .pot, .po and .mo files</li>
+<li><code>acf-FIELD_NAME.php</code>: Main plugin file that includes the correct field file based on the ACF version</li>
+<li><code>FIELD_NAME-v5.php</code>: Field class compatible with ACF version 5</li>
+<li><code>FIELD_NAME-v4.php</code>: Field class compatible with ACF version 4</li>
+<li><code>readme.txt</code>: WordPress readme file to be used by the wordpress repository</li>
+</ul>
+
+
+<h3>Changelog</h3>
+
+<p>5.0 - Refactored for ACF 5.0
+4.0 - Refactored for AFC 4.0 and above</p>

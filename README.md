@@ -1,6 +1,6 @@
 # ACF Address Field
 
-A field to hold an address street, city, state
+A field to hold an address: street, city, state, country
 
 -----------------------
 
@@ -17,8 +17,6 @@ This ACF field type is compatible with:
 3. Create a new field via ACF and select the FIELD_LABEL type
 4. Please refer to the description for more info regarding the field type settings
 
-### Changelog
-Please see `readme.txt` for changelog
 
 ### Structure
 
@@ -31,3 +29,6 @@ Please see `readme.txt` for changelog
 * `FIELD_NAME-v4.php`: Field class compatible with ACF version 4
 * `readme.txt`: WordPress readme file to be used by the wordpress repository
 
+### Changelog
+5.0 - Refactored for ACF 5.0
+4.0 - Refactored for AFC 4.0 and above

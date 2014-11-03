@@ -12,12 +12,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 
-function dd( $type ) {
-	var_dump($type);
-	die;
-}
-
-
 // 1. set text domain
 // Reference: https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
 load_plugin_textdomain( 'acf-address', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
