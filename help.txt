@@ -1,2 +1,0 @@
-FIELD_NAME            = address
-FIELD_LABEL           = Address

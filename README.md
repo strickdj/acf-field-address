@@ -7,6 +7,7 @@ A field to hold an address: street, city, state, country
 ### Compatibility
 
 This ACF field type is compatible with:
+
 * ACF 5
 * ACF 4
 
@@ -31,4 +32,5 @@ This ACF field type is compatible with:
 
 ### Changelog
 5.0 - Refactored for ACF 5.0
+
 4.0 - Refactored for AFC 4.0 and above
