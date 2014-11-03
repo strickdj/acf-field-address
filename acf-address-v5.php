@@ -158,7 +158,7 @@ class acf_field_address extends acf_field {
 		$dir = plugin_dir_url( __FILE__ );
 
 		// register & include JS
-		wp_register_script( 'acf-address-render-field', "{$dir}js/render_field.js" );
+		wp_register_script( 'acf-address-render-field', "{$dir}js/min/render_field-min.js" );
 		wp_enqueue_script('acf-address-render-field');
 		
 		
@@ -190,10 +190,10 @@ class acf_field_address extends acf_field {
 		wp_enqueue_script('jquery-ui-sortable');
 
 		// register & include JS
-		wp_register_script( 'address.jquery.js', "{$dir}js/address.jquery.js" );
+		wp_register_script( 'address.jquery.js', "{$dir}js/min/address.jquery-min.js" );
 		wp_enqueue_script('address.jquery.js');
 
-		wp_register_script( 'render_field_options', "{$dir}js/render_field_options.js" );
+		wp_register_script( 'render_field_options', "{$dir}js/min/render_field_options-min.js" );
 		wp_enqueue_script('render_field_options');
 
 		// register & include CSS
