@@ -31,6 +31,10 @@ This ACF field type is compatible with:
 * `readme.txt`: WordPress readme file to be used by the wordpress repository
 
 ### Changelog
+5.0.2 - Added backwards compatibility with previously created fields.
+
+5.0.1 - Switched the js files to minified ones.
+
 5.0 - Refactored for ACF 5.0
 
 4.0 - Refactored for AFC 4.0 and above
