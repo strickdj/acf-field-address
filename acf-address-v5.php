@@ -274,7 +274,7 @@ class acf_field_address extends acf_field {
 		if( count($target) < 5 ) {
 
 			while( count($target) < 5 ) {
-				$target[] = [];
+				$target[] = array();
 			}
 
 		}
