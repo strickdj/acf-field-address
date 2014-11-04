@@ -217,10 +217,135 @@ class acf_field_address extends acf_field {
 	 */
 	public function load_field( $field ) {
 
+		// detect old fields
+		if( array_key_exists('address_components', $field) ) {
+
+			$field['address_layout'] = $this->transform_layout( $field['address_layout'] );
+			$field['address_options'] = $this->transform_options( $field['address_components'] );
+			unset($field['address_components']);
+		}
+
 		$field['address_layout'] = json_encode( $field['address_layout'] );
 		$field['address_options'] = json_encode( $field['address_options'] );
 
 		return $field;
+
+	}
+
+
+	private function transform_layout($old_layout) {
+
+		$map = array(
+			'address1' => 'street1',
+			'address2' => 'street2',
+			'address3' => 'street3',
+			'city' => 'city',
+			'state' => 'state',
+			'postal_code' => 'zip',
+			'country' => 'country',
+		);
+
+		$labelMap = array(
+			'street1' => 'Street 1',
+			'street2' => 'Street 2',
+			'street3' => 'Street 3',
+			'city' => 'City',
+			'state' => 'State',
+			'zip' => 'Postal Code',
+			'country' => 'Country',
+		);
+
+		$target = array();
+
+		$i = 0;
+		foreach( $old_layout as $row ) {
+
+			foreach($row as $item) {
+				$o = new stdClass();
+				$o->id = $map[$item];
+				$o->label = $labelMap[$map[$item]];
+				$target[$i][] = $o;
+			}
+
+			$i++;
+
+		}
+
+		if( count($target) < 5 ) {
+
+			while( count($target) < 5 ) {
+				$target[] = [];
+			}
+
+		}
+
+		return $target;
+
+	}
+
+
+	private function transform_options($old_options) {
+
+		$map = array(
+			'street1' => array(
+				'id' => 'street1',
+				'label' => $old_options['address1']['label'] ?: '',
+				'defaultValue' => $old_options['address1']['default_value'] ?: '',
+				'enabled' => $old_options['address1']['enabled'] ? true : false,
+				'cssClass' => $old_options['address1']['class'] ?: '',
+				'separator' => $old_options['address1']['separator'] ?: '',
+			),
+			'street2' => array(
+				'id' => 'street2',
+				'label' => $old_options['street2']['label'] ?: '',
+				'defaultValue' => $old_options['street2']['default_value'] ?: '',
+				'enabled' => $old_options['street2']['enabled'] ? true : false,
+				'cssClass' => $old_options['street2']['class'] ?: '',
+				'separator' => $old_options['street2']['separator'] ?: '',
+			),
+			'street3' => array(
+				'id' => 'street3',
+				'label' => $old_options['street3']['label'] ?: '',
+				'defaultValue' => $old_options['street3']['default_value'] ?: '',
+				'enabled' => $old_options['street3']['enabled'] ? true : false,
+				'cssClass' => $old_options['street3']['class'] ?: '',
+				'separator' => $old_options['street3']['separator'] ?: '',
+			),
+			'city' => array(
+				'id' => 'city',
+				'label' => $old_options['city']['label'] ?: '',
+				'defaultValue' => $old_options['city']['default_value'] ?: '',
+				'enabled' => $old_options['city']['enabled'] ? true : false,
+				'cssClass' => $old_options['city']['class'] ?: '',
+				'separator' => $old_options['city']['separator'] ?: '',
+			),
+			'state' => array(
+				'id' => 'state',
+				'label' => $old_options['state']['label'] ?: '',
+				'defaultValue' => $old_options['state']['default_value'] ?: '',
+				'enabled' => $old_options['state']['enabled'] ? true : false,
+				'cssClass' => $old_options['state']['class'] ?: '',
+				'separator' => $old_options['state']['separator'] ?: '',
+			),
+			'zip' => array(
+				'id' => 'zip',
+				'label' => $old_options['zip']['label'] ?: '',
+				'defaultValue' => $old_options['zip']['default_value'] ?: '',
+				'enabled' => $old_options['zip']['enabled'] ? true : false,
+				'cssClass' => $old_options['zip']['class'] ?: '',
+				'separator' => $old_options['zip']['separator'] ?: '',
+			),
+			'country' => array(
+				'id' => 'country',
+				'label' => $old_options['country']['label'] ?: '',
+				'defaultValue' => $old_options['country']['default_value'] ?: '',
+				'enabled' => $old_options['country']['enabled'] ? true : false,
+				'cssClass' => $old_options['country']['class'] ?: '',
+				'separator' => $old_options['country']['separator'] ?: '',
+			),
+		);
+
+		return json_decode( json_encode( $map ) );
 
 	}
 
