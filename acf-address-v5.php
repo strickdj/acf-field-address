@@ -126,6 +126,20 @@ class acf_field_address extends acf_field {
 	 */
 	function render_field( $field ) {
 
+		// Work around for the ACF export to code option adding extra slashes and quotes
+		$address_options = stripcslashes( $field['address_options'] );
+		$address_layout = stripcslashes( $field['address_layout'] );
+
+		if( strpos($address_layout, '"') === 0 ) {
+			// remove the extra quotes
+			$address_layout = trim($address_layout, '"');
+		}
+
+		if( strpos($address_options, '"') === 0 ) {
+			// remove the extra quotes
+			$address_options = trim($address_options, '"');
+		}
+
 		?>
 
 		<div class="acf-address-field"
@@ -160,8 +174,8 @@ class acf_field_address extends acf_field {
 		// register & include JS
 		wp_register_script( 'acf-address-render-field', "{$dir}js/min/render_field-min.js" );
 		wp_enqueue_script('acf-address-render-field');
-		
-		
+
+
 		// register & include CSS
 		wp_register_style( 'acf-input-address', "{$dir}css/render_field.css" );
 		wp_enqueue_style('acf-input-address');
@@ -529,7 +543,7 @@ class acf_field_address extends acf_field {
 	//
 	//	}
 
-	
+
 }
 
 
