@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+  console.log('in the right place.');
 
   var $addressWidget = $('.acf-address-field');
 
@@ -7,7 +8,6 @@ jQuery(document).ready(function ($) {
     var $el = $(element),
       name = $el.data('name'),
       value = $el.data('value'),
-      //outputType = $el.data('output-type'),
       layout = $el.data('layout'),
       options = $el.data('options');
 

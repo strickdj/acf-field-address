@@ -146,8 +146,8 @@ class acf_field_address extends acf_field {
 		     data-name="<?php echo $field['name']; ?>"
 		     data-value="<?php echo esc_js( json_encode($field['value']) ); ?>"
 		     data-output-type="<?php echo $field['output_type']; ?>"
-		     data-layout="<?php echo esc_js( $field['address_layout'] ); ?>"
-		     data-options="<?php echo esc_js( $field['address_options'] ); ?>"
+		     data-layout="<?php echo esc_js( $address_layout ); ?>"
+		     data-options="<?php echo esc_js( $address_options ); ?>"
 			></div>
 
 		<?php
@@ -172,10 +172,11 @@ class acf_field_address extends acf_field {
 		$dir = plugin_dir_url( __FILE__ );
 
 		// register & include JS
+//		wp_register_script( 'acf-address-render-field', "{$dir}js/render_field.js" );
 		wp_register_script( 'acf-address-render-field', "{$dir}js/min/render_field-min.js" );
 		wp_enqueue_script('acf-address-render-field');
-
-
+		
+		
 		// register & include CSS
 		wp_register_style( 'acf-input-address', "{$dir}css/render_field.css" );
 		wp_enqueue_style('acf-input-address');
@@ -204,9 +205,11 @@ class acf_field_address extends acf_field {
 		wp_enqueue_script('jquery-ui-sortable');
 
 		// register & include JS
+//		wp_register_script( 'address.jquery.js', "{$dir}js/address.jquery.js" );
 		wp_register_script( 'address.jquery.js', "{$dir}js/min/address.jquery-min.js" );
 		wp_enqueue_script('address.jquery.js');
 
+//		wp_register_script( 'render_field_options', "{$dir}js/render_field_options.js" );
 		wp_register_script( 'render_field_options', "{$dir}js/min/render_field_options-min.js" );
 		wp_enqueue_script('render_field_options');
 
@@ -543,7 +546,7 @@ class acf_field_address extends acf_field {
 	//
 	//	}
 
-
+	
 }
 
 
