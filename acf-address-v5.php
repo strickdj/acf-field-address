@@ -126,6 +126,9 @@ class acf_field_address extends acf_field {
 	 */
 	function render_field( $field ) {
 
+//		var_dump($field);
+//		die;
+
 		// Work around for the ACF export to code option adding extra slashes and quotes
 		$address_options = stripcslashes( $field['address_options'] );
 		$address_layout = stripcslashes( $field['address_layout'] );
@@ -234,6 +237,8 @@ class acf_field_address extends acf_field {
 	 */
 	public function load_field( $field ) {
 
+//		var_dump($field);
+//		die;
 		// detect old fields
 		if( array_key_exists('address_components', $field) ) {
 
@@ -243,10 +248,10 @@ class acf_field_address extends acf_field {
 		}
 
 		if ( is_array($field['address_layout']) ) {
-			$field['address_layout'] = json_encode( $field['address_layout'] );
+			$field['address_layout'] = json_encode( $field['address_layout'], JSON_UNESCAPED_UNICODE );
 		}
 		if ( is_object($field['address_options']) ) {
-			$field['address_options'] = json_encode( $field['address_options'] );
+			$field['address_options'] = json_encode( $field['address_options'], JSON_UNESCAPED_UNICODE );
 		}
 
 		return $field;
