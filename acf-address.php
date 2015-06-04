@@ -4,7 +4,7 @@
 Plugin Name: Advanced Custom Fields: Address
 Plugin URI: https://github.com/strickdj/acf-field-address
 Description: A field to hold an address street, city, state
-Version: 1.0.0
+Version: 5.0.3
 Author: Daris Strickland
 Author URI: https://github.com/strickdj/acf-field-address
 License: GPLv2 or later
