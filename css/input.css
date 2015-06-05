@@ -1,44 +1,41 @@
 /* Advanced Custom Fields Addon - Address Field */
 
-
 /* Field Options Screen */
 tr.field_option_address-field .address_layout ul {
-  list-style-type: none;
-  border: 1px solid #999999;
-  background-color: #AAAAAA;
-  min-height: 36px;
+    list-style-type: none;
+    border: 1px solid #999999;
+    background-color: #AAAAAA;
+    min-height: 36px;
 }
 
 tr.field_option_address-field .address_layout li {
-  display: inline-block;
-  margin: 3px;
-  padding: 5px;
-  border: 1px solid #CCCCCC;
-  background-color: #EEEEEE;
-  min-width: 100px;
-  min-height: 15px;
-  cursor: move;
+    display: inline-block;
+    margin: 3px;
+    padding: 5px;
+    border: 1px solid #CCCCCC;
+    background-color: #EEEEEE;
+    min-width: 100px;
+    min-height: 15px;
+    cursor: move;
 }
 
 tr.field_option_address-field .address_layout li.placeholder {
-  border: 1px dashed #333333;
-  background-color: #FFFFFF;
+    border: 1px dashed #333333;
+    background-color: #FFFFFF;
 }
 
 tr.field_option_address-field .address_layout li.disabled {
-  display: none;
+    display: none;
 }
-
 
 /* Add/Edit Post */
 .postbox .address .address_row {
-  clear: both;
+    clear: both;
 }
 
 .postbox .address .address_row label {
-  float:left;
-  padding: 5px 10px 0 0;
+    float: left;
+    padding: 5px 10px 0 0;
 }
-
 
 /* get_value() and shortcode display */
