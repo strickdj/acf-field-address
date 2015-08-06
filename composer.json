@@ -1,0 +1,19 @@
+{
+  "name": "strickdj/acf-address",
+  "description": "Advanced Custom Fields Address Plugin",
+  "keywords": ["wordpress", "plugin", "acf", "address"],
+  "homepage": "https://github.com/strickdj/acf-field-address",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daris Strickland",
+      "email": "daris.strickland@gmail.com",
+      "homepage": "http://daris-strickland.com/"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.3.2",
+    "composer/installers": "~1.0.12"
+  }
+}
