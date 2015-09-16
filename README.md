@@ -1,6 +1,6 @@
 # ACF Address Field
 
-A field to hold an address: street, city, state, country
+An Advanced Custom Field for working with address information.
 
 -----------------------
 
@@ -13,22 +13,9 @@ This ACF field type is compatible with:
 
 ### Installation
 
-1. Copy the `acf-FIELD_NAME` folder into your `wp-content/plugins` folder
-2. Activate the FIELD_LABEL plugin via the plugins admin page
-3. Create a new field via ACF and select the FIELD_LABEL type
-4. Please refer to the description for more info regarding the field type settings
-
-
-### Structure
-
-* `/css`:  folder for .css files.
-* `/images`: folder for image files
-* `/js`: folder for .js files
-* `/lang`: folder for .pot, .po and .mo files
-* `acf-FIELD_NAME.php`: Main plugin file that includes the correct field file based on the ACF version
-* `FIELD_NAME-v5.php`: Field class compatible with ACF version 5
-* `FIELD_NAME-v4.php`: Field class compatible with ACF version 4
-* `readme.txt`: WordPress readme file to be used by the wordpress repository
+1. Copy the plugin folder into your `plugins` folder
+2. Activate the Advanced Custom Fields: Address plugin via the plugins admin page
+3. Create a new field via ACF and select the Address type
 
 ### Changelog
 5.0.4 - Fixed problem with unicode characters
