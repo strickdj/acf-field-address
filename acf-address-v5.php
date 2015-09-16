@@ -252,17 +252,20 @@ class acf_field_address extends acf_field {
 			unset( $field['address_components'] );
 		}
 
-		if ( is_array( $field['address_layout'] ) ) {
-			$field['address_layout'] = json_encode( $field['address_layout'], JSON_UNESCAPED_UNICODE );
-		}
-		if ( is_object( $field['address_options'] ) ) {
-			$field['address_options'] = json_encode( $field['address_options'], JSON_UNESCAPED_UNICODE );
-		}
+    if ( is_array( $field['address_layout'] ) ) {
+      $field['address_layout'] = $this->jsonEncode( $field['address_layout'] );
+    }
+    if ( is_object( $field['address_options'] ) ) {
+      $field['address_options'] = $this->jsonEncode( $field['address_options'] );
+    }
 
 		return $field;
 
 	}
 
+	private function jsonEncode($val) {
+		return defined('JSON_UNESCAPED_UNICODE') ? json_encode($val, JSON_UNESCAPED_UNICODE) : json_encode($val);
+	}
 
 	private function transform_layout( $old_layout ) {
 
