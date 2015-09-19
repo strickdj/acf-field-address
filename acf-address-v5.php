@@ -2,7 +2,6 @@
 
 class acf_field_address extends acf_field {
 
-
 	public function __construct() {
 
 		$this->name = 'address';
@@ -33,7 +32,6 @@ class acf_field_address extends acf_field {
 
 		parent::__construct();
 	}
-
 
 	/**
 	 *  Create extra settings for your field. These are visible when editing a field
@@ -110,7 +108,6 @@ class acf_field_address extends acf_field {
 
 	}
 
-
 	/**
 	 *  render_field()
 	 *
@@ -127,9 +124,6 @@ class acf_field_address extends acf_field {
 	 * @return    n/a
 	 */
 	function render_field( $field ) {
-
-//		var_dump($field);
-//		die;
 
 		// Work around for the ACF export to code option adding extra slashes and quotes
 		$address_options = stripcslashes( $field['address_options'] );
@@ -158,7 +152,6 @@ class acf_field_address extends acf_field {
 	<?php
 	}
 
-
 	/**
 	 *  input_admin_enqueue_scripts()
 	 *
@@ -175,20 +168,21 @@ class acf_field_address extends acf_field {
 	 */
 	function input_admin_enqueue_scripts() {
 
-		$dir = plugin_dir_url( __FILE__ );
+    $dir = plugin_dir_url( __FILE__ );
 
-		// register & include JS
-//		wp_register_script( 'acf-address-render-field', "{$dir}js/render_field.js" );
-		wp_register_script( 'acf-address-render-field', "{$dir}js/min/render_field-min.js" );
-		wp_enqueue_script( 'acf-address-render-field' );
+    if(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
+      wp_register_script( 'acf-address-render-field', "{$dir}js/render_field.js" );
+    } else {
+      wp_register_script( 'acf-address-render-field', "{$dir}js/min/render_field-min.js" );
+    }
 
+    wp_enqueue_script( 'acf-address-render-field' );
 
 		// register & include CSS
 		wp_register_style( 'acf-input-address', "{$dir}css/render_field.css" );
 		wp_enqueue_style( 'acf-input-address' );
 
 	}
-
 
 	/**
 	 *  field_group_admin_enqueue_scripts()
@@ -208,16 +202,16 @@ class acf_field_address extends acf_field {
 
 		$dir = plugin_dir_url( __FILE__ );
 
-		// Ensure that jquery ui sortable is enqueued
+    if(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
+      wp_register_script( 'address.jquery.js', "{$dir}js/address.jquery.js" );
+      wp_register_script( 'render_field_options', "{$dir}js/render_field_options.js" );
+    } else {
+      wp_register_script( 'address.jquery.js', "{$dir}js/min/address.jquery-min.js" );
+      wp_register_script( 'render_field_options', "{$dir}js/min/render_field_options-min.js" );
+    }
+
 		wp_enqueue_script( 'jquery-ui-sortable' );
-
-		// register & include JS
-//		wp_register_script( 'address.jquery.js', "{$dir}js/address.jquery.js" );
-		wp_register_script( 'address.jquery.js', "{$dir}js/min/address.jquery-min.js" );
 		wp_enqueue_script( 'address.jquery.js' );
-
-//		wp_register_script( 'render_field_options', "{$dir}js/render_field_options.js" );
-		wp_register_script( 'render_field_options', "{$dir}js/min/render_field_options-min.js" );
 		wp_enqueue_script( 'render_field_options' );
 
 		// register & include CSS
@@ -225,7 +219,6 @@ class acf_field_address extends acf_field {
 		wp_enqueue_style( 'render_field_options' );
 
 	}
-
 
 	/**
 	 *  load_field()
@@ -242,11 +235,8 @@ class acf_field_address extends acf_field {
 	 */
 	public function load_field( $field ) {
 
-//		var_dump($field);
-//		die;
 		// detect old fields
 		if ( array_key_exists( 'address_components', $field ) ) {
-
 			$field['address_layout']  = $this->transform_layout( $field['address_layout'] );
 			$field['address_options'] = $this->transform_options( $field['address_components'] );
 			unset( $field['address_components'] );
@@ -263,10 +253,18 @@ class acf_field_address extends acf_field {
 
 	}
 
+  /**
+   * @param $val
+   * @return mixed|string|void
+   */
 	private function jsonEncode($val) {
 		return defined('JSON_UNESCAPED_UNICODE') ? json_encode($val, JSON_UNESCAPED_UNICODE) : json_encode($val);
 	}
 
+  /**
+   * @param $old_layout
+   * @return array
+   */
 	private function transform_layout( $old_layout ) {
 
 		$map = array(
@@ -317,7 +315,10 @@ class acf_field_address extends acf_field {
 
 	}
 
-
+  /**
+   * @param $old_options
+   * @return array|mixed|object
+   */
 	private function transform_options( $old_options ) {
 
 		$map = array(
@@ -383,7 +384,6 @@ class acf_field_address extends acf_field {
 
 	}
 
-
 	/**
 	 *  update_field()
 	 *
@@ -411,7 +411,6 @@ class acf_field_address extends acf_field {
 		return $field;
 
 	}
-
 
 	/**
 	 *  format_value()
@@ -502,7 +501,6 @@ class acf_field_address extends acf_field {
 		return $html;
 	}
 
-
 	/**
 	 * @param $value
 	 *
@@ -512,7 +510,6 @@ class acf_field_address extends acf_field {
 		return json_decode( json_encode( $value ) );
 	}
 
-
 	/**
 	 * @param $value
 	 *
@@ -521,7 +518,6 @@ class acf_field_address extends acf_field {
 	private function valueToArray( $value ) {
 		return $value;
 	}
-
 
 	/*
 *  validate_value()
@@ -568,9 +564,7 @@ class acf_field_address extends acf_field {
 	//
 	//	}
 
-
 }
-
 
 // create field
 new acf_field_address();
