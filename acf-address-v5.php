@@ -458,48 +458,33 @@ class acf_field_address extends acf_field {
 	 *
 	 * @return string
 	 */
-	private function valueToHtml( $value, $field ) {
-
+	private function valueToHtml($value, $field)
+	{
 		$html = '';
-
-		$layout = json_decode( $field['address_layout'] );
-
-		$options = json_decode( $field['address_options'] );
-
-		$html .= "<div class='sim_address_field'>";
-
-		foreach ( $layout as $rowIndex => $row ) {
-
-			if ( empty( $row ) ) {
-				continue;
-			}
-
-			$html .= "<div class='sim_address_row'>";
-
-			foreach ( $row as $colIndex => $item ) {
-
-				$key = $item->id;
-
-				$html .= sprintf( "<span class='%s'>", $options->{$key}->cssClass );
-
-				$html .= $value[ $key ];
-
-				if ( $options->{$key}->separator !== '' ) {
-					$html .= $options->{$key}->separator;
+		$value = array_filter($value);
+		if(!empty($value)) {
+			$layout = json_decode($field['address_layout']);
+			$options = json_decode($field['address_options']);
+			$html .= "<div class='sim_address_field'>";
+			foreach( $layout as $rowIndex => $row ) {
+				if(empty($row)) continue;
+				$html .= "<div class='sim_address_row'>";
+				foreach($row as $colIndex => $item) {
+					$key = $item->id;
+					$html .= sprintf( "<span class='%s'>", $options->{$key}->cssClass );
+					$html .= $value[$key];
+					if ( $options->{$key}->separator !== '' ) {
+						$html .= $options->{$key}->separator;
+					}
+					$html .= "</span>";
 				}
-
-				$html .= "</span>";
-
+				$html .= "</div>";
 			}
-
 			$html .= "</div>";
-
 		}
-
-		$html .= "</div>";
-
 		return $html;
 	}
+
 
 	/**
 	 * @param $value
