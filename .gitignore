@@ -1,3 +1,7 @@
 .DS_Store
+.idea
 /vendor
 /node_modules
+
+# ignore composer.lock
+composer.lock
