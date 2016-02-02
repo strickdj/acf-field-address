@@ -1,12 +1,6 @@
 (function($) {
 
-
-  function initialize_field($el) {
-
-    //$el.doStuff();
-
-  }
-
+  function initialize_field($el) {}
 
   if (typeof acf.add_action !== 'undefined') {
 
@@ -25,19 +19,11 @@
      */
 
     acf.add_action('ready append', function($el) {
-
-      // search $el for fields of type 'address'
       acf.get_fields({type: 'address'}, $el).each(function() {
-
         initialize_field($(this));
-
       });
-
     });
-
-
   } else {
-
 
     /*
      *  acf/setup_fields (ACF4)
@@ -55,17 +41,9 @@
      */
 
     $(document).live('acf/setup_fields', function(e, postbox) {
-
       $(postbox).find('.field[data-field_type="address"]').each(function() {
-
         initialize_field($(this));
-
       });
-
     });
-
-
   }
-
-
 })(jQuery);

@@ -29,7 +29,6 @@
     // merge defaults and passed arguments
     var settings = $.extend(defaults, options);
 
-
     // closure scope so its absolutely clear
     var closure = {
       $el: $el,
@@ -41,7 +40,6 @@
         .prop('value', JSON.stringify(settings.layout)),
       $detachedEls: {}
     };
-
 
     var setGridPositions = function() {
 

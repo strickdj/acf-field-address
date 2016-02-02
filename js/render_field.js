@@ -1,10 +1,7 @@
 jQuery(document).ready(function($) {
-  console.log('in the right place.');
-
   var $addressWidget = $('.acf-address-field');
 
   $addressWidget.each(function(index, element) {
-
     var $el = $(element),
       name = $el.data('name'),
       value = $el.data('value'),
@@ -22,17 +19,10 @@ jQuery(document).ready(function($) {
     }, value);
 
     $.each(layout, function(rowIndex, row) {
-
-      // loop through layout and render the input fields
-
       var $ul = $('<ul/>');
-
       $.each(row, function(col, obj) {
-
         var $li = $('<li/>');
-
         var propName = name + '[' + obj.id + ']';
-
         $li.append($('<label/>')
           .prop('for', propName)
           .text(options[obj.id].label));
@@ -42,15 +32,9 @@ jQuery(document).ready(function($) {
             .prop('value', value[obj.id])
             .prop('placeholder', options[obj.id].defaultValue)
         );
-
         $ul.append($li);
-
       });
-
       $el.append($ul);
-
     });
-
   });
-
 });
