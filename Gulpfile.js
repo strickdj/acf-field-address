@@ -35,7 +35,7 @@ gulp.task('webpack:watch-dev', () => {
   livereload.listen()
   gulp.watch(`./${ACF_ADDRESS_ROOT}/**/*.php`, [ 'livereload' ])
   gulp.watch(`./${ACF_ADDRESS_ROOT}/js/*.js`, [ 'webpack:build-dev' ])
-  gulp.watch(`./${ACF_ADDRESS_ROOT}/less/*.less`, [ 'webpack:build-dev' ])
+  gulp.watch(`./${ACF_ADDRESS_ROOT}/scss/*.scss`, [ 'webpack:build-dev' ])
 })
 
 gulp.task('livereload', (cb) => {

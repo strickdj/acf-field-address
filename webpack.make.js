@@ -24,7 +24,7 @@ module.exports = function makeWebpackConfig(options) {
 
   config.resolve = {
     extensions: [ '', '.jsx', '.js' ],
-    root: path.join(__dirname, ACF_ADDRESS_ROOT, 'assets')
+    root: path.join(__dirname, ACF_ADDRESS_ROOT)
   }
 
   config.output = {
