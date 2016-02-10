@@ -1,14 +1,14 @@
 require('../scss/render_field.scss')
 
-jQuery(document).ready(function($) {
-  var $addressWidget = $('.acf-address-field');
+jQuery(document).ready(function ($) {
+  let $addressWidget = $('.acf-address-field')
 
-  $addressWidget.each(function(index, element) {
-    var $el = $(element),
+  $addressWidget.each(function (index, element) {
+    let $el = $(element),
       name = $el.data('name'),
       value = $el.data('value'),
       layout = $el.data('layout'),
-      options = $el.data('options');
+      options = $el.data('options')
 
     value = $.extend({
       street1: null,
@@ -18,25 +18,25 @@ jQuery(document).ready(function($) {
       state: null,
       zip: null,
       country: null
-    }, value);
+    }, value)
 
-    $.each(layout, function(rowIndex, row) {
-      var $ul = $('<ul/>');
-      $.each(row, function(col, obj) {
-        var $li = $('<li/>');
-        var propName = name + '[' + obj.id + ']';
+    $.each(layout, function (rowIndex, row) {
+      let $ul = $('<ul/>')
+      $.each(row, function (col, obj) {
+        let $li = $('<li/>')
+        let propName = name + '[' + obj.id + ']'
         $li.append($('<label/>')
           .prop('for', propName)
-          .text(options[obj.id].label));
+          .text(options[obj.id].label))
 
         $li.append($('<input type="text"/>')
             .prop('name', propName)
             .prop('value', value[obj.id])
             .prop('placeholder', options[obj.id].defaultValue)
-        );
-        $ul.append($li);
-      });
-      $el.append($ul);
-    });
-  });
-});
+        )
+        $ul.append($li)
+      })
+      $el.append($ul)
+    })
+  })
+})

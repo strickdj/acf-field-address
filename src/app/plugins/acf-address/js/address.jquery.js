@@ -1,36 +1,40 @@
-(function($) {
+let defaults = require('./defaults.service')(jQuery)
 
-  var widgetCount = 0;
+defaults()
+
+(function ($) {
+
+  let widgetCount = 0
 
   // factory function for creating widget closures
-  var makeLayout = function(options, $el) {
+  let makeLayout = function (options, $el) {
 
     // keeping track of multiple widgets
-    widgetCount = widgetCount + 1;
+    widgetCount = widgetCount + 1
 
     // Widget Defaults
-    var defaults = {
+    let defaults = {
       layout: [
-        [{id: 'street1', label: 'Street 1'}],
-        [{id: 'street2', label: 'Street 2'}],
-        [{id: 'street3', label: 'Street 3'}],
+        [ { id: 'street1', label: 'Street 1' } ],
+        [ { id: 'street2', label: 'Street 2' } ],
+        [ { id: 'street3', label: 'Street 3' } ],
         [
-          {id: 'city', label: 'City'},
-          {id: 'state', label: 'State'},
-          {id: 'zip', label: 'Postal Code'},
-          {id: 'country', label: 'Country'}
+          { id: 'city', label: 'City' },
+          { id: 'state', label: 'State' },
+          { id: 'zip', label: 'Postal Code' },
+          { id: 'country', label: 'Country' }
         ],
         []
       ],
       rowClass: 'acf-address-' + widgetCount + '-row',
       sortableElement: 'li'
-    };
+    }
 
     // merge defaults and passed arguments
-    var settings = $.extend(defaults, options);
+    let settings = $.extend(defaults, options)
 
     // closure scope so its absolutely clear
-    var closure = {
+    let closure = {
       $el: $el,
       layout: settings.layout,
       rowClass: settings.rowClass,
@@ -39,85 +43,85 @@
         .prop('name', 'acfAddressWidget[' + settings.fieldKey + '][address_layout]')
         .prop('value', JSON.stringify(settings.layout)),
       $detachedEls: {}
-    };
+    }
 
-    var setGridPositions = function() {
+    let setGridPositions = function () {
 
-      var positions = [];
+      let positions = []
 
-      closure.$el.find('.' + closure.rowClass).each(function(rowIndex, row) {
+      closure.$el.find('.' + closure.rowClass).each(function (rowIndex, row) {
 
-        var r = [];
+        let r = []
 
-        $(row).find(closure.sortableElement).each(function(col, item) {
+        $(row).find(closure.sortableElement).each(function (col, item) {
 
-          var $item = $(item);
+          let $item = $(item)
 
           r[col] = {
             id: $item.data().id,
             label: $item.data().label
-          };
+          }
 
           // create a position object that holds the row and column values
-          var position = {
+          let position = {
             col: col,
             row: rowIndex
-          };
+          }
 
           // set the data properties col and row to the corresponding values
-          $item.data(position);
+          $item.data(position)
 
-        });
+        })
 
-        positions[rowIndex] = r;
+        positions[rowIndex] = r
 
-      });
+      })
 
-      closure.$inputElement.attr('value', JSON.stringify(positions));
+      closure.$inputElement.attr('value', JSON.stringify(positions))
 
-    };
+    }
 
-    var makeSortable = function($el, options) {
+    let makeSortable = function ($el, options) {
 
-      var settings = $.extend({
-        stop: function() { // takes parameters event, ui
-          setGridPositions();
+      let settings = $.extend({
+        stop: function () { // takes parameters event, ui
+          setGridPositions()
         }
-      }, options);
+      }, options)
 
-      return $el.sortable(settings).disableSelection();
+      return $el.sortable(settings).disableSelection()
 
-    };
+    }
 
 
-    var setSortableLabel = function(e) {
-      var id = e.data.id,
-        label = e.target.value;
+    let setSortableLabel = function (e) {
+      let id = e.data.id,
+        label = e.target.value
 
       if ($(e.target).data('col') === 'label') {
-        closure.$el.find('li').each(function(index, element) {
-          $el = $(element);
+        closure.$el.find('li').each(function (index, element) {
+          $el = $(element)
           if ($el.data().id === id) {
             $el.data('label', label)
-              .text(label);
+              .text(label)
           }
-        });
+        })
       }
-    };
+    }
 
 
-    var toggleSortable = function(e) {
+    let toggleSortable = function (e) {
 
-      var id = e.data.id,
+      let id = e.data.id,
         targetData = $(e.target).data(),
-        $lastUl = closure.$el.find('.' + closure.rowClass).last();
+        $lastUl = closure.$el.find('.' + closure.rowClass).last()
 
       if (e.target.checked) {
 
         // check to see if its in the $detachedEls object
         if (closure.$detachedEls.hasOwnProperty(id)) {
           // used the saved one
-          $lastUl.append(closure.$detachedEls[id]);
+          $lastUl.append(closure.$detachedEls[id])
         } else {
           // create the element from scratch
           $lastUl.append($('<li></li>')
@@ -125,61 +129,61 @@
               id: targetData.id,
               label: targetData.label
             })
-            .text(targetData.label));
+            .text(targetData.label))
         }
 
       } else {
 
-        closure.$el.find('li').each(function(index, element) {
-          $el = $(element);
+        closure.$el.find('li').each(function (index, element) {
+          $el = $(element)
           if ($el.data().id === id) {
-            closure.$detachedEls[id] = $el;
-            $el.detach();
+            closure.$detachedEls[id] = $el
+            $el.detach()
           }
-        });
+        })
 
       }
 
       // update the layout input with changes
-      setGridPositions();
+      setGridPositions()
 
-    };
+    }
 
-    var buildLayout = function() {
+    let buildLayout = function () {
 
-      closure.$el.append(closure.$inputElement);
+      closure.$el.append(closure.$inputElement)
 
-      $(closure.layout).each(function(row, items) {
-        var $ul = $('<ul></ul>')
-          .addClass(closure.rowClass);
-        closure.$el.append($ul);
+      $(closure.layout).each(function (row, items) {
+        let $ul = $('<ul></ul>')
+          .addClass(closure.rowClass)
+        closure.$el.append($ul)
 
-        makeSortable($ul, {connectWith: "." + closure.rowClass});
+        makeSortable($ul, { connectWith: '.' + closure.rowClass })
 
-        $(items).each(function(col, obj) {
+        $(items).each(function (col, obj) {
           $ul.append($('<li></li>')
             .data(obj)
-            .text(obj.label));
-        });
+            .text(obj.label))
+        })
 
-      });
+      })
 
-    };
+    }
 
-    buildLayout();
+    buildLayout()
 
     // we need to return some functions
     return {
       onBlur: setSortableLabel,
       onCheck: toggleSortable
-    };
+    }
 
-  };
+  }
 
-  var makeOptions = function(options, $el) {
+  let makeOptions = function (options, $el) {
 
     // Widget Defaults
-    var defaults = {
+    let defaults = {
       options: {
         street1: {
           id: 'street1',
@@ -205,9 +209,9 @@
           cssClass: 'street3',
           separator: ''
         },
-        city: {id: 'city', label: 'City', defaultValue: '', enabled: true, cssClass: 'city', separator: ','},
-        state: {id: 'state', label: 'State', defaultValue: '', enabled: true, cssClass: 'state', separator: ''},
-        zip: {id: 'zip', label: 'Postal Code', defaultValue: '', enabled: true, cssClass: 'zip', separator: ''},
+        city: { id: 'city', label: 'City', defaultValue: '', enabled: true, cssClass: 'city', separator: ',' },
+        state: { id: 'state', label: 'State', defaultValue: '', enabled: true, cssClass: 'state', separator: '' },
+        zip: { id: 'zip', label: 'Postal Code', defaultValue: '', enabled: true, cssClass: 'zip', separator: '' },
         country: {
           id: 'country',
           label: 'Country',
@@ -217,24 +221,24 @@
           separator: ''
         }
       }
-    };
+    }
 
     // merge defaults and passed arguments
-    var settings = $.extend(defaults, options);
+    let settings = $.extend(defaults, options)
 
     // Add some functionality to the event methods
     function onBlurWithAfter(e) {
-      settings.onBlur(e);
-      afterOnEvent(e);
+      settings.onBlur(e)
+      afterOnEvent(e)
     }
 
     function onCheckWithAfter(e) {
-      settings.onCheck(e);
-      afterOnEvent(e);
+      settings.onCheck(e)
+      afterOnEvent(e)
     }
 
     // closure scope so its absolutely clear
-    var self = {
+    let self = {
       $element: $el,
       $inputElement: $('<input type="hidden">')
         .data('val', settings.options)
@@ -243,127 +247,127 @@
       options: settings.options,
       onBlur: onBlurWithAfter,
       onCheck: onCheckWithAfter
-    };
+    }
 
     function afterOnEvent(e) {
 
-      var data = self.$inputElement.data();
+      let data = self.$inputElement.data()
 
-      var col = $(e.target).data('col');
+      let col = $(e.target).data('col')
 
       if (e.type === 'change') {
-        data.val[e.data.id][col] = e.target.checked;
+        data.val[e.data.id][col] = e.target.checked
       } else {
-        data.val[e.data.id][col] = e.target.value;
+        data.val[e.data.id][col] = e.target.value
       }
 
-      self.$inputElement.data(data);
+      self.$inputElement.data(data)
 
-      self.$inputElement.prop('value', JSON.stringify(data.val));
+      self.$inputElement.prop('value', JSON.stringify(data.val))
     }
 
-    var makeInput = function(type, value, data) {
-      var $input = $('<input type="hidden">')
+    let makeInput = function (type, value, data) {
+      let $input = $('<input type="hidden">')
         .val(value)
-        .data(data);
+        .data(data)
 
       if (type === 'checkbox') {
         $input.prop('type', 'checkbox')
           .prop('checked', value)
-          .on('change', data, self.onCheck);
+          .on('change', data, self.onCheck)
       }
       if (type === 'text') {
         $input.prop('type', 'text')
-          .on('blur', data, self.onBlur);
+          .on('blur', data, self.onBlur)
       }
 
-      return $input;
-    };
+      return $input
+    }
 
-    var init = function() {
+    let init = function () {
 
-      self.$element.append(self.$inputElement);
+      self.$element.append(self.$inputElement)
 
-      var $table = $('<table></table>');
-      var $head = $('<tr></tr>')
+      let $table = $('<table></table>')
+      let $head = $('<tr></tr>')
         .append($('<th>Enabled</th>'))
         .append($('<th>Label</th>'))
         .append($('<th>Default Value</th>'))
         .append($('<th>Css Class</th>'))
-        .append($('<th>Separator</th>'));
+        .append($('<th>Separator</th>'))
 
-      $table.append($head);
+      $table.append($head)
 
-      $.each(self.options, function(row, obj) {
+      $.each(self.options, function (row, obj) {
 
-        var $tr = $('<tr></tr>');
+        let $tr = $('<tr></tr>')
 
-        var $tdEnabled = $('<td></td>').append(makeInput('checkbox', obj.enabled, obj).data('col', 'enabled'));
-        var $tdLabel = $('<td></td>').append(makeInput('text', obj.label, obj).data('col', 'label'));
-        var $tdDefault = $('<td></td>').append(makeInput('text', obj.defaultValue, obj).data('col', 'defaultValue'));
-        var $tdCssClass = $('<td></td>').append(makeInput('text', obj.cssClass, obj).data('col', 'cssClass'));
-        var $tdSeparator = $('<td></td>').append(makeInput('text', obj.separator, obj).data('col', 'separator'));
+        let $tdEnabled = $('<td></td>').append(makeInput('checkbox', obj.enabled, obj).data('col', 'enabled'))
+        let $tdLabel = $('<td></td>').append(makeInput('text', obj.label, obj).data('col', 'label'))
+        let $tdDefault = $('<td></td>').append(makeInput('text', obj.defaultValue, obj).data('col', 'defaultValue'))
+        let $tdCssClass = $('<td></td>').append(makeInput('text', obj.cssClass, obj).data('col', 'cssClass'))
+        let $tdSeparator = $('<td></td>').append(makeInput('text', obj.separator, obj).data('col', 'separator'))
 
         $tr.append($tdEnabled)
           .append($tdLabel)
           .append($tdDefault)
           .append($tdCssClass)
-          .append($tdSeparator);
+          .append($tdSeparator)
 
-        $table.append($tr);
-      });
+        $table.append($tr)
+      })
 
-      self.$element.append($table);
+      self.$element.append($table)
 
-    };
+    }
 
-    init();
+    init()
 
     // in this case we will just return the jQuery object
-    return self.$element;
+    return self.$element
 
-  };
+  }
 
-  $.fn.acfAddressWidget = function(options) {
+  $.fn.acfAddressWidget = function (options) {
 
-    var $this = $(this);
+    let $this = $(this)
 
-    var settings = $.extend({}, options);
+    let settings = $.extend({}, options)
 
     // Call our instance closure
     // to handle multiple elements
-    $this.each(function(index, element) {
+    $this.each(function (index, element) {
 
-      var $element = $(element);
+      let $element = $(element)
 
       if ($element.data('acfAddressWidgetized') === true) {
-        return;
+        return
       }
 
-      $element.data('acfAddressWidgetized', true);
+      $element.data('acfAddressWidgetized', true)
 
-      var $optionsContainer = $('<div></div>').attr('id', 'options-container');
-      var $layoutContainer = $('<div></div>').attr('id', 'layout-container');
+      let $optionsContainer = $('<div></div>').attr('id', 'options-container')
+      let $layoutContainer = $('<div></div>').attr('id', 'layout-container')
 
       $element.append($optionsContainer)
-        .append($layoutContainer);
+        .append($layoutContainer)
 
-      settings.fieldKey = $element.data('field');
+      settings.fieldKey = $element.data('field')
 
-      settings.layout = window.acfAddressWidgetData.address_layout;
+      settings.layout = window.acfAddressWidgetData.address_layout
 
-      settings.options = window.acfAddressWidgetData.address_options;
+      settings.options = window.acfAddressWidgetData.address_options
 
 
-      var lc = makeLayout(settings, $layoutContainer);
+      let lc = makeLayout(settings, $layoutContainer)
 
-      settings.onBlur = lc.onBlur;
-      settings.onCheck = lc.onCheck;
-      makeOptions(settings, $optionsContainer);
-    });
+      settings.onBlur = lc.onBlur
+      settings.onCheck = lc.onCheck
+      makeOptions(settings, $optionsContainer)
+    })
 
-    return $this;
+    return $this
 
-  };
+  }
 
-})(jQuery);
+})(jQuery)

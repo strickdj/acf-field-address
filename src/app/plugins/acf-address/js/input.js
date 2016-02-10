@@ -1,8 +1,10 @@
 require('../scss/input.scss')
 
-(function($) {
+(function ($) {
 
-  function initialize_field($el) {}
+  let acf = window.acf
+
+  function initialize_field() {}
 
   if (typeof acf.add_action !== 'undefined') {
 
@@ -20,11 +22,11 @@ require('../scss/input.scss')
      *  @return	n/a
      */
 
-    acf.add_action('ready append', function($el) {
-      acf.get_fields({type: 'address'}, $el).each(function() {
-        initialize_field($(this));
-      });
-    });
+    acf.add_action('ready append', function ($el) {
+      acf.get_fields({ type: 'address' }, $el).each(function () {
+        initialize_field($(this))
+      })
+    })
   } else {
 
     /*
@@ -42,10 +44,10 @@ require('../scss/input.scss')
      *  @return	n/a
      */
 
-    $(document).live('acf/setup_fields', function(e, postbox) {
-      $(postbox).find('.field[data-field_type="address"]').each(function() {
-        initialize_field($(this));
-      });
-    });
+    $(document).live('acf/setup_fields', function (e, postbox) {
+      $(postbox).find('.field[data-field_type="address"]').each(function () {
+        initialize_field($(this))
+      })
+    })
   }
-})(jQuery);
+})(jQuery)
