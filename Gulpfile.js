@@ -43,7 +43,7 @@ gulp.task('livereload', (cb) => {
   cb()
 })
 
-gulp.task('build', [ 'clean:dist', 'webpack:build', 'version' ])
+gulp.task('build', [ 'clean:dist', 'webpack:build' ])
 
 gulp.task('clean:dist', () => {
   return del([
