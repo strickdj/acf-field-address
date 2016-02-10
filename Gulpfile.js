@@ -9,11 +9,12 @@ const mysqldump = require('mysqldump')
 const gmcfp = require('gulp-mysql-command-file-processor')
 const livereload = require('gulp-livereload')
 const webpack = require('webpack')
-const webpackConfig = require('./webpack.config.js')
 const del = require('del')
 const fs = require('fs')
 
 const ACF_ADDRESS_ROOT = process.env.ACF_ADDRESS_ROOT
+
+console.log(process.env.ACF_ADDRESS_ROOT)
 
 /* ------------------------- Gulp Tasks -------------------------------- */
 
@@ -43,7 +44,7 @@ gulp.task('livereload', (cb) => {
   cb()
 })
 
-gulp.task('build', [ 'clean:dist', 'webpack:build' ])
+gulp.task('build', gulpsync.sync([ 'clean:dist', [ 'webpack:build' ] ]))
 
 gulp.task('clean:dist', () => {
   return del([
@@ -55,7 +56,7 @@ gulp.task('webpack:build', (cb) => {
   let webpackConfig = Object.create(require('./webpack.make')({
     BUILD: true,
     TEST: false
-  }))
+  }, ACF_ADDRESS_ROOT))
   let compiler = webpack(webpackConfig)
 
   compiler.run((err, stats) => {
@@ -68,7 +69,10 @@ gulp.task('webpack:build', (cb) => {
 
 })
 
-let webpackDevConfig = Object.create(webpackConfig)
+let webpackDevConfig = Object.create(require('./webpack.make')({
+  BUILD: true,
+  TEST: false
+}, ACF_ADDRESS_ROOT))
 // create a single instance of the compiler to allow caching
 let devCompiler = webpack(webpackDevConfig)
 

@@ -53,5 +53,6 @@
     "webpack-manifest-plugin": "^0.5.0"
   },
   "scripts": {
+    "lint": "eslint --fix src/app/plugins/acf-address/js/address.jquery.js src/app/plugins/acf-address/js/input.js src/app/plugins/acf-address/js/defaults.service.js src/app/plugins/acf-address/js/render_field.js src/app/plugins/acf-address/js/render_field_options.js"
   }
 }

@@ -6,9 +6,7 @@ const autoprefixer = require('autoprefixer-core')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 
-const ACF_ADDRESS_ROOT = process.env.ACF_ADDRESS_ROOT
-
-module.exports = function makeWebpackConfig(options) {
+module.exports = function makeWebpackConfig(options, ACF_ADDRESS_ROOT) {
 
   let BUILD = !!options.BUILD
   let TEST = !!options.TEST
@@ -42,6 +40,8 @@ module.exports = function makeWebpackConfig(options) {
   }
 
   const LOADER_INCLUDE_PATH = path.resolve(__dirname, ACF_ADDRESS_ROOT)
+
+  console.log(LOADER_INCLUDE_PATH)
 
   config.module = {
     preLoaders: [
