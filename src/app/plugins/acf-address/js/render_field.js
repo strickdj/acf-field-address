@@ -1,3 +1,5 @@
+require('../scss/render_field.scss')
+
 jQuery(document).ready(function($) {
   var $addressWidget = $('.acf-address-field');
 

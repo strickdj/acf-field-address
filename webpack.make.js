@@ -28,7 +28,7 @@ module.exports = function makeWebpackConfig(options) {
   }
 
   config.output = {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, ACF_ADDRESS_ROOT, 'dist'),
     filename: BUILD ? '[name].[hash].js' : '[name].bundle.js',
     chunkFilename: BUILD ? '[name].[hash].js' : '[name].bundle.js'
   }

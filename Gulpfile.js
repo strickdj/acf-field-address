@@ -47,7 +47,7 @@ gulp.task('build', [ 'clean:dist', 'webpack:build' ])
 
 gulp.task('clean:dist', () => {
   return del([
-    'dist/*'
+    `${ACF_ADDRESS_ROOT}/dist/*`
   ])
 })
 

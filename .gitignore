@@ -10,6 +10,8 @@ src/app/plugins/*
 !src/app/plugins/acf-address
 
 src/wp/*
-!src/wp/.gitkeep
 
 .env
+
+src/app/plugins/acf-address/dist/*
+!src/app/plugins/acf-address/dist/.gitkeep

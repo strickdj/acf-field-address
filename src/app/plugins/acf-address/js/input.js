@@ -1,3 +1,5 @@
+require('../scss/input.scss')
+
 (function($) {
 
   function initialize_field($el) {}
