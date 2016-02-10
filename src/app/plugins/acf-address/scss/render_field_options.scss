@@ -115,40 +115,4 @@ $screen-xs-max: 768px;
     }
   }
 
-  // Responsive tables
-  //
-  // Wrap your tables in `.table-responsive` and we'll make them mobile friendly
-  // by enabling horizontal scrolling. Only applies <768px. Everything above that
-  // will display normally.
-
-  table {
-    @media screen and (max-width: $screen-xs-max) {
-      width: 100%;
-      margin-bottom: ($line-height-computed * 0.75);
-      overflow-y: hidden;
-      overflow-x: auto;
-      -ms-overflow-style: -ms-autohiding-scrollbar;
-      border: 1px solid $table-border-color;
-      -webkit-overflow-scrolling: touch;
-
-      // Tighten up spacing
-      > .table {
-        margin-bottom: 0;
-
-        // Ensure the content doesn't wrap
-        > thead,
-        > tbody,
-        > tfoot {
-          > tr {
-            > th,
-            > td {
-              white-space: nowrap;
-            }
-          }
-        }
-      }
-
-    }
-  }
-
 }

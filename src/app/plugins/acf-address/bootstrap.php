@@ -1,5 +1,7 @@
 <?php
 
+require 'ACFAddressPluginHelper.php';
+
 // 1. set text domain
 // Reference: https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
 load_plugin_textdomain( 'acf-address', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
@@ -18,3 +20,14 @@ function register_fields_address() {
 }
 
 add_action( 'acf/register_fields', 'register_fields_address' );
+
+
+add_action('plugins_loaded', function() {
+
+  // todo pass pristine $_POST into plugin...
+
+  $PRISTINE_POST = $_POST;
+
+
+
+});

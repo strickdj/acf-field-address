@@ -2,7 +2,7 @@
 
 class acf_field_address extends acf_field {
 
-  public function __construct($helper) {
+  public function __construct(ACFAddressPluginHelper $helper) {
 
     $this->helper = $helper;
 
@@ -18,6 +18,7 @@ class acf_field_address extends acf_field {
     /*
     *  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
     */
+    // todo fix this garbage
     $this->defaults = array(
       'output_type'     => 'html',
       'address_layout'  => '[[{"id":"street1","label":"Street 1"}],[{"id":"street2","label":"Street 2"}],[{"id":"street3","label":"Street 3"}],[{"id":"city","label":"City"},{"id":"state","label":"State"},{"id":"zip","label":"Postal Code"},{"id":"country","label":"Country"}],[]]',
@@ -170,19 +171,23 @@ class acf_field_address extends acf_field {
    */
   function input_admin_enqueue_scripts() {
 
-    $dir = plugin_dir_url( __FILE__ );
+    $manifest = $this->helper->get_assets_manifest();
 
-    if(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
-      wp_register_script( 'acf-address-render-field', "{$dir}js/render_field.js" );
-    } else {
-      wp_register_script( 'acf-address-render-field', "{$dir}js/min/render_field-min.js" );
-    }
+    $asset_path = $this->helper->get_assets_uri();
 
-    wp_enqueue_script( 'acf-address-render-field' );
+    // todo render_field.css never gets used why?
+    $manifest_file_keys = [
+      "input.js"  => 'js',
+      "input.css"  => 'css',
+      "render_field.js"  => 'js',
+      "render_field.css"  => 'css'
+    ];
 
-    // register & include CSS
-    wp_register_style( 'acf-input-address', "{$dir}css/render_field.css" );
-    wp_enqueue_style( 'acf-input-address' );
+    wp_register_script( 'acf_a_f_render_field', $asset_path . $manifest['render_field.js'] );
+    wp_enqueue_script( 'acf_a_f_render_field' );
+
+    wp_register_style( 'acf_a_f_input_styles', $asset_path . $manifest['input.css'] );
+    wp_enqueue_style( 'acf_a_f_input_styles' );
 
   }
 
@@ -202,23 +207,22 @@ class acf_field_address extends acf_field {
    */
   function field_group_admin_enqueue_scripts() {
 
-    $dir = plugin_dir_url( __FILE__ );
+    $manifest = $this->helper->get_assets_manifest();
 
-    if(defined('SCRIPT_DEBUG') && SCRIPT_DEBUG === true) {
-      wp_register_script( 'address.jquery.js', "{$dir}js/address.jquery.js" );
-      wp_register_script( 'render_field_options', "{$dir}js/render_field_options.js" );
-    } else {
-      wp_register_script( 'address.jquery.js', "{$dir}js/min/address.jquery-min.js" );
-      wp_register_script( 'render_field_options', "{$dir}js/min/render_field_options-min.js" );
-    }
+    $asset_path = $this->helper->get_assets_uri();
 
-    wp_enqueue_script( 'jquery-ui-sortable' );
-    wp_enqueue_script( 'address.jquery.js' );
-    wp_enqueue_script( 'render_field_options' );
+    wp_register_style( 'acf_a_f_render_field_options_styles', $asset_path . $manifest['render_field_options.css'] );
+    wp_enqueue_style( 'acf_a_f_render_field_options_styles' );
 
-    // register & include CSS
-    wp_register_style( 'render_field_options', "{$dir}css/render_field_options.css" );
-    wp_enqueue_style( 'render_field_options' );
+    wp_register_script( 'acf_a_f_address_field', $asset_path . $manifest['address_jquery.js'], array('jquery-ui-sortable') );
+    wp_register_script( 'acf_a_f_input', $asset_path . $manifest['input.js'] );
+    wp_register_script( 'acf_a_f_render_field_options', $asset_path . $manifest['render_field_options.js'] );
+    wp_enqueue_script( 'acf_a_f_address_field' );
+    wp_enqueue_script( 'acf_a_f_render_field_options' );
+
+    wp_localize_script('acf_a_f_address_field', 'acf_a_f_bundle_data', [
+      'publicAssetsPath' => $this->helper->get_assets_uri()
+    ]);
 
   }
 
@@ -525,7 +529,5 @@ class acf_field_address extends acf_field {
 
 }
 
-$helper = null;
-
 // create field
-new acf_field_address($helper);
+new acf_field_address(new ACFAddressPluginHelper());

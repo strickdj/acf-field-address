@@ -1,4 +1,4 @@
-require('../scss/render_field.scss')
+require('../scss/render_field_options.scss')
 
 jQuery(document).ready(function($) {
   // todo init
