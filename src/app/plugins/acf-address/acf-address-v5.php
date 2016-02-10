@@ -176,18 +176,14 @@ class acf_field_address extends acf_field {
     $asset_path = $this->helper->get_assets_uri();
 
     // todo render_field.css never gets used why?
-    $manifest_file_keys = [
-      "input.js"  => 'js',
-      "input.css"  => 'css',
-      "render_field.js"  => 'js',
-      "render_field.css"  => 'css'
-    ];
 
     wp_register_script( 'acf_a_f_render_field', $asset_path . $manifest['render_field.js'] );
     wp_enqueue_script( 'acf_a_f_render_field' );
 
-    wp_register_style( 'acf_a_f_input_styles', $asset_path . $manifest['input.css'] );
-    wp_enqueue_style( 'acf_a_f_input_styles' );
+    if(array_key_exists('input.css', $manifest)) {
+      wp_register_style( 'acf_a_f_input_styles', $asset_path . $manifest['input.css'] );
+      wp_enqueue_style( 'acf_a_f_input_styles' );
+    }
 
   }
 
@@ -211,8 +207,10 @@ class acf_field_address extends acf_field {
 
     $asset_path = $this->helper->get_assets_uri();
 
-    wp_register_style( 'acf_a_f_render_field_options_styles', $asset_path . $manifest['render_field_options.css'] );
-    wp_enqueue_style( 'acf_a_f_render_field_options_styles' );
+    if(array_key_exists('render_field_options.css', $manifest)) {
+      wp_register_style( 'acf_a_f_render_field_options_styles', $asset_path . $manifest['render_field_options.css'] );
+      wp_enqueue_style( 'acf_a_f_render_field_options_styles' );
+    }
 
     wp_register_script( 'acf_a_f_address_field', $asset_path . $manifest['address_jquery.js'], array('jquery-ui-sortable') );
     wp_register_script( 'acf_a_f_input', $asset_path . $manifest['input.js'] );
@@ -240,11 +238,10 @@ class acf_field_address extends acf_field {
    * @return    $field
    */
   public function load_field( $field ) {
-
     // detect old fields
     if ( array_key_exists( 'address_components', $field ) ) {
-      $field['address_layout']  = $this->transform_layout( $field['address_layout'] );
-      $field['address_options'] = $this->transform_options( $field['address_components'] );
+      $field['address_layout']  = $this->helper->transform_layout( $field['address_layout'] );
+      $field['address_options'] = $this->helper->transform_options( $field['address_components'] );
       unset( $field['address_components'] );
     }
 
@@ -256,7 +253,6 @@ class acf_field_address extends acf_field {
     }
 
     return $field;
-
   }
 
   /**
@@ -267,128 +263,6 @@ class acf_field_address extends acf_field {
     return defined('JSON_UNESCAPED_UNICODE') ? json_encode($val, JSON_UNESCAPED_UNICODE) : json_encode($val);
   }
 
-  /**
-   * @param $old_layout
-   * @return array
-   */
-  private function transform_layout( $old_layout ) {
-
-    $map = array(
-      'address1'    => 'street1',
-      'address2'    => 'street2',
-      'address3'    => 'street3',
-      'city'        => 'city',
-      'state'       => 'state',
-      'postal_code' => 'zip',
-      'country'     => 'country',
-    );
-
-    $labelMap = array(
-      'street1' => 'Street 1',
-      'street2' => 'Street 2',
-      'street3' => 'Street 3',
-      'city'    => 'City',
-      'state'   => 'State',
-      'zip'     => 'Postal Code',
-      'country' => 'Country',
-    );
-
-    $target = array();
-
-    $i = 0;
-    foreach ( $old_layout as $row ) {
-
-      foreach ( $row as $item ) {
-        $o              = new stdClass();
-        $o->id          = $map[ $item ];
-        $o->label       = $labelMap[ $map[ $item ] ];
-        $target[ $i ][] = $o;
-      }
-
-      $i ++;
-
-    }
-
-    if ( count( $target ) < 5 ) {
-
-      while ( count( $target ) < 5 ) {
-        $target[] = array();
-      }
-
-    }
-
-    return $target;
-
-  }
-
-  /**
-   * @param $old_options
-   * @return array|mixed|object
-   */
-  private function transform_options( $old_options ) {
-
-    $map = array(
-      'street1' => array(
-        'id'           => 'street1',
-        'label'        => $old_options['address1']['label'] ?: '',
-        'defaultValue' => $old_options['address1']['default_value'] ?: '',
-        'enabled'      => $old_options['address1']['enabled'] ? true : false,
-        'cssClass'     => $old_options['address1']['class'] ?: '',
-        'separator'    => $old_options['address1']['separator'] ?: '',
-      ),
-      'street2' => array(
-        'id'           => 'street2',
-        'label'        => $old_options['address2']['label'] ?: '',
-        'defaultValue' => $old_options['address2']['default_value'] ?: '',
-        'enabled'      => $old_options['address2']['enabled'] ? true : false,
-        'cssClass'     => $old_options['address2']['class'] ?: '',
-        'separator'    => $old_options['address2']['separator'] ?: '',
-      ),
-      'street3' => array(
-        'id'           => 'street3',
-        'label'        => $old_options['address3']['label'] ?: '',
-        'defaultValue' => $old_options['address3']['default_value'] ?: '',
-        'enabled'      => $old_options['address3']['enabled'] ? true : false,
-        'cssClass'     => $old_options['address3']['class'] ?: '',
-        'separator'    => $old_options['address3']['separator'] ?: '',
-      ),
-      'city'    => array(
-        'id'           => 'city',
-        'label'        => $old_options['city']['label'] ?: '',
-        'defaultValue' => $old_options['city']['default_value'] ?: '',
-        'enabled'      => $old_options['city']['enabled'] ? true : false,
-        'cssClass'     => $old_options['city']['class'] ?: '',
-        'separator'    => $old_options['city']['separator'] ?: '',
-      ),
-      'state'   => array(
-        'id'           => 'state',
-        'label'        => $old_options['state']['label'] ?: '',
-        'defaultValue' => $old_options['state']['default_value'] ?: '',
-        'enabled'      => $old_options['state']['enabled'] ? true : false,
-        'cssClass'     => $old_options['state']['class'] ?: '',
-        'separator'    => $old_options['state']['separator'] ?: '',
-      ),
-      'zip'     => array(
-        'id'           => 'zip',
-        'label'        => $old_options['postal_code']['label'] ?: '',
-        'defaultValue' => $old_options['postal_code']['default_value'] ?: '',
-        'enabled'      => $old_options['postal_code']['enabled'] ? true : false,
-        'cssClass'     => $old_options['postal_code']['class'] ?: '',
-        'separator'    => $old_options['postal_code']['separator'] ?: '',
-      ),
-      'country' => array(
-        'id'           => 'country',
-        'label'        => $old_options['country']['label'] ?: '',
-        'defaultValue' => $old_options['country']['default_value'] ?: '',
-        'enabled'      => $old_options['country']['enabled'] ? true : false,
-        'cssClass'     => $old_options['country']['class'] ?: '',
-        'separator'    => $old_options['country']['separator'] ?: '',
-      ),
-    );
-
-    return json_decode( json_encode( $map ) );
-
-  }
 
   /**
    *  update_field()
@@ -404,7 +278,6 @@ class acf_field_address extends acf_field {
    * @return    $field
    */
   function update_field( $field ) {
-
     $fieldKey = $field['key'];
 
     if ( ! isset( $_POST['acfAddressWidget'][ $fieldKey ] ) ) {
@@ -415,7 +288,6 @@ class acf_field_address extends acf_field {
     $field['address_layout']  = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_layout'] ) );
 
     return $field;
-
   }
 
   /**
@@ -434,95 +306,24 @@ class acf_field_address extends acf_field {
    * @return mixed $value
    */
   public function format_value( $value, $post_id, $field ) {
-
     // bail early if no value
     if ( empty( $value ) ) {
       return $value;
     }
 
     switch ( $field['output_type'] ) {
-
       case 'array':
-        return $this->valueToArray( $value );
+        return $this->helper->valueToArray( $value );
 
       case 'html':
-        return $this->valueToHtml( $value, $field );
+        return $this->helper->valueToHtml( $value, $field );
 
       case 'object':
-        return $this->valueToObject( $value );
+        return $this->helper->valueToObject( $value );
 
       default:
-        return $this->valueToHtml( $value, $field );
-
+        return $this->helper->valueToHtml( $value, $field );
     }
-
-  }
-
-  /**
-   * @param $value
-   * @param $field
-   *
-   * @return string
-   */
-  private function valueToHtml( $value, $field ) {
-
-    $html = '';
-
-    $layout = json_decode( $field['address_layout'] );
-
-    $options = json_decode( $field['address_options'] );
-
-    $html .= "<div class='sim_address_field'>";
-
-    foreach ( $layout as $rowIndex => $row ) {
-
-      if ( empty( $row ) ) {
-        continue;
-      }
-
-      $html .= "<div class='sim_address_row'>";
-
-      foreach ( $row as $colIndex => $item ) {
-
-        $key = $item->id;
-
-        $html .= sprintf( "<span class='%s'>", $options->{$key}->cssClass );
-
-        $html .= $value[ $key ];
-
-        if ( $options->{$key}->separator !== '' ) {
-          $html .= $options->{$key}->separator;
-        }
-
-        $html .= "</span>";
-
-      }
-
-      $html .= "</div>";
-
-    }
-
-    $html .= "</div>";
-
-    return $html;
-  }
-
-  /**
-   * @param $value
-   *
-   * @return array|mixed
-   */
-  private function valueToObject( $value ) {
-    return json_decode( json_encode( $value ) );
-  }
-
-  /**
-   * @param $value
-   *
-   * @return mixed
-   */
-  private function valueToArray( $value ) {
-    return $value;
   }
 
   // todo implement method validate_value

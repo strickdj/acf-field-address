@@ -14,8 +14,6 @@ const fs = require('fs')
 
 const ACF_ADDRESS_ROOT = process.env.ACF_ADDRESS_ROOT
 
-console.log(process.env.ACF_ADDRESS_ROOT)
-
 /* ------------------------- Gulp Tasks -------------------------------- */
 
 /**
@@ -70,7 +68,7 @@ gulp.task('webpack:build', (cb) => {
 })
 
 let webpackDevConfig = Object.create(require('./webpack.make')({
-  BUILD: true,
+  BUILD: false,
   TEST: false
 }, ACF_ADDRESS_ROOT))
 // create a single instance of the compiler to allow caching

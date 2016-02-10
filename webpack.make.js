@@ -39,9 +39,16 @@ module.exports = function makeWebpackConfig(options, ACF_ADDRESS_ROOT) {
     config.devtool = 'eval-source-map'
   }
 
-  const LOADER_INCLUDE_PATH = path.resolve(__dirname, ACF_ADDRESS_ROOT)
+  config.eslint = {
+    fix: true
+  }
+  if(!BUILD) {
+    config.eslint.rules = {
+      "no-console": 0
+    }
+  }
 
-  console.log(LOADER_INCLUDE_PATH)
+  const LOADER_INCLUDE_PATH = path.resolve(__dirname, ACF_ADDRESS_ROOT)
 
   config.module = {
     preLoaders: [
@@ -79,6 +86,10 @@ module.exports = function makeWebpackConfig(options, ACF_ADDRESS_ROOT) {
     definePlugin,
     new ExtractTextPlugin('[name].[hash].css', {
       disable: !BUILD || TEST
+    }),
+    new ManifestPlugin({
+      fileName: 'manifest.json',
+      basePath: ''
     })
   ]
 
@@ -86,11 +97,7 @@ module.exports = function makeWebpackConfig(options, ACF_ADDRESS_ROOT) {
     config.plugins.push(
       new webpack.NoErrorsPlugin(),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin(),
-      new ManifestPlugin({
-        fileName: 'manifest.json',
-        basePath: ''
-      })
+      new webpack.optimize.UglifyJsPlugin()
     )
   }
 

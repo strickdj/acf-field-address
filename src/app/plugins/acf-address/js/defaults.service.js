@@ -4,7 +4,7 @@ let post_id = 1
 
 module.exports = ($) => {
 
-  $.ajax({
+  return $.ajax({
     url : window.ajaxurl,
     type : 'post',
     data : {
@@ -12,6 +12,9 @@ module.exports = ($) => {
       post_id : post_id
     }
   })
-    .then(res => alert(res))
+    .then(res => {
+      alert(res)
+      return res
+    })
 
 }
