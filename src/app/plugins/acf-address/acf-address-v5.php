@@ -149,7 +149,7 @@ class acf_field_address extends acf_field {
 		     data-options="<?php echo esc_js( $address_options ); ?>"
 			></div>
 
-	<?php
+	  <?php
 	}
 
 	/**
