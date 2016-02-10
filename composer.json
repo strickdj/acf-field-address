@@ -12,6 +12,12 @@
     }
   ],
   "type": "wordpress-plugin",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wpackagist.org"
+    }
+  ],
   "autoload-dev": {
     "classmap": [
       "tests/TestCase.php"
@@ -22,6 +28,16 @@
     "composer/installers": "~1.0.12"
   },
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "johnpbloch/wordpress": "4.4.1",
+    "vlucas/phpdotenv": "^2.0.1",
+    "phpunit/phpunit": "*",
+    "symfony/debug": "^3.0"
+  },
+  "extra": {
+    "installer-paths": {
+      "src/plugins/{$name}/": ["type:wordpress-plugin"],
+      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+    },
+    "wordpress-install-dir": "src/wp"
   }
 }

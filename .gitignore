@@ -5,3 +5,11 @@
 
 # ignore composer.lock
 composer.lock
+
+src/plugins/*
+!src/plugins/acf-address
+
+src/wp/*
+!src/wp/.gitkeep
+
+.env
