@@ -20,6 +20,10 @@
     {
       "type": "git",
       "url": "git@bitbucket.org:simadmin/acf-plugin-mirror.git"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:strickdj/ACF-Address-Test-Theme.git"
     }
   ],
   "autoload-dev": {
@@ -34,6 +38,7 @@
   "require-dev": {
     "codeception/codeception": "*",
     "simadmin/acf-mirror": "5.3.4",
+    "strickdj/ACF-Address-Test-Theme": "dev-master",
     "johnpbloch/wordpress": "4.4.2",
     "vlucas/phpdotenv": "^2.0.1",
     "phpunit/phpunit": "*",
@@ -52,7 +57,7 @@
   "extra": {
     "installer-paths": {
       "src/app/plugins/{$name}/": ["type:wordpress-plugin"],
-      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+      "src/app/themes/{$name}/": ["type:wordpress-theme"]
     },
     "wordpress-install-dir": "src/wp"
   }
