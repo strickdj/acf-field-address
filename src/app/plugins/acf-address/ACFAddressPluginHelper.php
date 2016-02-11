@@ -44,6 +44,12 @@ class ACFAddressPluginHelper
 
     $options = json_decode( $field['address_options'] );
 
+    $value = array_filter($value);
+
+    if(empty($value)) {
+      return $html;
+    }
+
     $html .= "<div class='sim_address_field'>";
 
     foreach ( $layout as $rowIndex => $row ) {

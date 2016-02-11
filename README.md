@@ -29,6 +29,7 @@ This ACF field type is compatible with:
 ## Changelog
 5.1.0 - Fixed bug preventing the creation of new Address fields.
 
+  - Fixed bug rendering the field to html
   - Automated testing support
   - Build tools, gulp, webpack, es6, scss
 
