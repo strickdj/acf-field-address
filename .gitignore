@@ -15,3 +15,4 @@ src/wp/*
 
 src/app/plugins/acf-address/dist/*
 !src/app/plugins/acf-address/dist/.gitkeep
+tests/_output/*
