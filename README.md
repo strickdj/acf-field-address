@@ -27,6 +27,10 @@ This ACF field type is compatible with:
 3. Create a new field via ACF and select the Address type.
 
 ## Changelog
+5.0.6 - Now works properly with php >= 5.3
+
+5.0.5 - Added composer support.
+
 5.0.4 - Fixed problem with unicode characters
 
 5.0.3 - Fixed issue with exported fields
