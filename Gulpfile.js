@@ -1,180 +1,130 @@
+'use strict'
+require('dotenv').config()
 
-'use strict';
+const gulp = require('gulp')
+const gulpsync = require('gulp-sync')(gulp)
+const gutil = require('gulp-util')
+const dbTask = require('gulp-db')
+const mysqldump = require('mysqldump')
+const gmcfp = require('gulp-mysql-command-file-processor')
+const livereload = require('gulp-livereload')
+const webpack = require('webpack')
+const del = require('del')
+const fs = require('fs')
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var buffer = require('vinyl-buffer');
-var source = require('vinyl-source-stream');
-var sourcemaps = require('gulp-sourcemaps');
-var gulpif = require('gulp-if');
-var jscs = require('gulp-jscs');
-var eslint = require('gulp-eslint');
-var less = require('gulp-less');
-var autoprefixer = require('gulp-autoprefixer');
-var minifyCSS = require('gulp-minify-css');
-var livereload = require('gulp-livereload');
-var formatter = require('eslint-friendly-formatter');
-
-/** Constants */
-var SRC_PATH = '.';
-var JS_SRC_PATH = SRC_PATH + '/js';
-var LESS_SRC_PATH = SRC_PATH + '/less/**/*.less';
-
-var DIST_PATH = './dist';
-var JS_DIST_PATH = DIST_PATH + '/bundle.js';
-
-
-function standardHandler(err){
-  // Notification
-  // have not tried this yet sounds cool...
-  //var notifier = Notification();
-  //notifier.notify({ message: 'Error: ' + err.message });
-  // Log to console
-  gutil.log(gutil.colors.red('Error'), err.message);
-  this.emit('end');
-}
+const ACF_ADDRESS_ROOT = process.env.ACF_ADDRESS_ROOT
 
 /* ------------------------- Gulp Tasks -------------------------------- */
 
-gulp.task('default', ['build']);
+/**
+ * Gulp
+ * default task: `gulp`
+ * alias for `gulp build`
+ */
+gulp.task('default', [ 'build' ])
 
-// Watch Files For Changes
-gulp.task('watch', ['watch1', 'watchjs']);
+/**
+ * Gulp watch `gulp watch`
+ * Watch Files For Changes and recompile on change.
+ */
+gulp.task('watch', [ 'webpack:build-dev', 'webpack:watch-dev' ])
 
-gulp.task('watch1', function() {
-  livereload.listen();
-  gulp.watch(JS_SRC_PATH + '/**/*.js', ['jscs', 'lint']);
-  gulp.watch(LESS_SRC_PATH, ['less']);
-});
 
-// build for production or development
-gulp.task('build', ['jscs', 'lint', 'js', 'less', 'version']);
+gulp.task('webpack:watch-dev', () => {
+  livereload.listen()
+  gulp.watch(`./${ACF_ADDRESS_ROOT}/**/*.php`, [ 'livereload' ])
+  gulp.watch(`./${ACF_ADDRESS_ROOT}/js/*.js`, [ 'webpack:build-dev' ])
+  gulp.watch(`./${ACF_ADDRESS_ROOT}/scss/*.scss`, [ 'webpack:build-dev' ])
+})
 
-// less task ---------------------------------------------------------
+gulp.task('livereload', (cb) => {
+  livereload.reload()
+  cb()
+})
 
-gulp.task('less', function() {
+gulp.task('build', gulpsync.sync([ 'clean:dist', [ 'webpack:build' ] ]))
 
-  return gulp.src(LESS_SRC_PATH)
-    .pipe(sourcemaps.init())
-    .pipe(less())
-    .on('error', standardHandler)
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false
+gulp.task('clean:dist', () => {
+  return del([
+    `${ACF_ADDRESS_ROOT}/dist/*`
+  ])
+})
+
+gulp.task('webpack:build', (cb) => {
+  let webpackConfig = Object.create(require('./webpack.make')({
+    BUILD: true,
+    TEST: false
+  }, ACF_ADDRESS_ROOT))
+  let compiler = webpack(webpackConfig)
+
+  compiler.run((err, stats) => {
+    if(err) throw new gutil.PluginError('webpack:build', err)
+    gutil.log('[webpack:build]', stats.toString({
+      colors: true
     }))
-    .pipe(gulpif(gutil.env.production, minifyCSS()))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(DIST_PATH))
-    .pipe(livereload());
+    cb()
+  })
 
-});
+})
 
-// Javascript Tasks ---------------------------------------------------------
+let webpackDevConfig = Object.create(require('./webpack.make')({
+  BUILD: false,
+  TEST: false
+}, ACF_ADDRESS_ROOT))
+// create a single instance of the compiler to allow caching
+let devCompiler = webpack(webpackDevConfig)
 
-// Code style checker
-gulp.task('jscs', function() {
-  return gulp.src(JS_SRC_PATH + '/**/*.js')
-    .pipe(jscs({esnext: true, preset: 'google'}));
-});
+gulp.task('webpack:build-dev', (cb) => {
+  // run webpack
+  devCompiler.run((err, stats) => {
+    if(err) throw new gutil.PluginError('webpack:build-dev', err)
+    gutil.log('[webpack:build-dev]', stats.toString({
+      colors: true
+    }))
+    livereload.reload()
+    cb()
+  })
+})
 
-// lint
-gulp.task('lint', function() {
-  var config = {
-    'no-console': gutil.env.production ? 1 : 0
-  };
-  return gulp.src(JS_SRC_PATH + '/**/*.js')
-    .pipe(eslint(config))
-    .pipe(eslint.format(formatter))
-    .pipe(gulpif(gutil.env.production, eslint.failOnError()));
-});
+/* ------------------------- Gulp Deploy Tasks -------------------------------- */
 
-// browserify stuff below....
-var jsTask = function(watch) {
+/**
+ * Gulp Database Init `gulp db:init`
+ * Initializes your local database with test database.
+ */
+gulp.task('db:init', gulpsync.sync([ 'db:drop', 'db:create', 'db:populate' ]))
 
-  var bundler = browserify({
-    debug: true
-  });
+let dbConfig = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306
+}
 
-  if (gutil.env.production) {
-    bundler.plugin('minifyify', {output: JS_DIST_PATH});
-  }
+let dbManager = dbTask(Object.assign({}, dbConfig, { dialect: 'mysql', database: null }))
 
-  bundler.add(JS_SRC_PATH + '/index.jsx');
+gulp.task('db:create', dbManager.create(process.env.DB_NAME))
 
-  if (watch === 'WATCH_MODE') {
-    bundler = watchify(bundler);
-  }
+gulp.task('db:drop', dbManager.drop(process.env.DB_NAME))
 
-  // add any other browserify options or transforms here
-  bundler.transform('babelify');
+gulp.task('db:populate', cb => {
+  gulp.src('./tests/_data/dump.sql')
+    .pipe(gmcfp(dbConfig.user, dbConfig.password, dbConfig.host, dbConfig.port, dbConfig.database))
+    .pipe(gulp.dest('./tests/fixtures'))
 
-  var bundle = function() {
+  cb()
+})
 
-    return bundler.bundle()
-      // log errors if they happen
-      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-      .pipe(source(JS_DIST_PATH))
-      .pipe(gulpif(!gutil.env.production, buffer()
-          .pipe(sourcemaps.init({loadMaps: true}))
-          .pipe(sourcemaps.write('.'))
-      ))
-      .pipe(gulp.dest('./'))
-      .pipe(livereload());
+/**
+ * This is a helper task that updates tests/_data/dump.sql
+ */
+gulp.task('dump:local', (cb) => {
+  let config = Object.assign({}, dbConfig, { dest:'./tests/_data/dump.sql' })
+  mysqldump(config, err => {
+    if(err) throw new Error(err)
+    process.exit(0)
+  })
 
-  };
-
-  bundler.on('update', bundle); // on any dep update, runs the bundler
-  bundler.on('log', gutil.log); // output build logs to terminal
-
-  return {
-    bundle: bundle
-  };
-
-};
-
-gulp.task('js', jsTask().bundle);
-
-gulp.task('watchjs', jsTask('WATCH_MODE').bundle);
-
-
-// The below task rewrites the main plugin file and updates all the information required by WordPress.
-var fs = require("fs");
-var p = JSON.parse(fs.readFileSync('./package.json'));
-gulp.task('version', function() {
-
-  var template = '<?php \n/*\n\
-!!! Warning: This file is automatically generated from the build process. !!!\n\
-!!! To update this file edit package.json and run gulp !!!\n\
-Theme Name: <%= name %>\n\
-Theme URI: <%= url %>\n\
-Author: <%= author %>\n\
-Author URI: <%= authorUrl %>\n\
-Description: <%= description %>\n\
-Version: <%= version %>\n\
-License: <%= license %>\n\
-License URI: <%= licenseUrl %>\n\
-Text Domain: <%= textDomain %>\n\
-*/\n\
-include "bootstrap.php";\
-';
-
-  var compiled = gutil.template(template, {
-    file: {
-      path: 'acf-address.php'
-    },
-    name: p.wpMeta.name,
-    url: p.wpMeta.url,
-    author: p.author,
-    authorUrl: p.wpMeta.authorUrl,
-    description: p.description,
-    version: p.version,
-    license: p.license,
-    licenseUrl: p.wpMeta.licenseUrl,
-    textDomain: p.wpMeta.textDomain
-  });
-
-  fs.writeFile('style.css', compiled);
-
-});
+  cb()
+})

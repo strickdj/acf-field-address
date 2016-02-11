@@ -11,7 +11,11 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-define('ACF_ADDRESS_PLUGIN_PATH', plugin_dir_path(__FILE__) . 'src/app/plugins/acf-address/');
-define('ACF_ADDRESS_PLUGIN_URL', plugins_url('', __FILE__) . '/src/app/plugins/acf-address');
+define('ACF_ADDRESS_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('ACF_ADDRESS_PLUGIN_URL', plugins_url('', __FILE__));
 
-require "src/app/plugins/acf-address/bootstrap.php";
+//var_dump(ACF_ADDRESS_PLUGIN_PATH);
+//var_dump(ACF_ADDRESS_PLUGIN_URL);
+//die();
+
+require "bootstrap.php";
