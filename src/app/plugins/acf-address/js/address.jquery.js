@@ -1,8 +1,8 @@
 (function ($) {
 
-  let defaults = require('./defaults.service')
+  //let defaults = require('./defaults.service')
 
-  defaults(window.jQuery)
+  //defaults(window.jQuery)
 
   let widgetCount = 0
 
