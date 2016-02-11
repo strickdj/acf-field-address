@@ -280,11 +280,6 @@ class acf_field_address extends acf_field {
   function update_field( $field ) {
     $fieldKey = $this->getKey( $field );
 
-//    var_dump($field);
-//    var_dump($_POST['acfAddressWidget']);
-//    var_dump($_POST['acfAddressWidget'][ $fieldKey ]);
-//    die;
-
     $field['address_options'] = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_options'] ) );
     $field['address_layout']  = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_layout'] ) );
 
