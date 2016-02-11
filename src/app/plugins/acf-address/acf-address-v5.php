@@ -282,6 +282,7 @@ class acf_field_address extends acf_field {
 
     if(!array_key_exists('acfAddressWidget', $_POST)) {
       // This branch is to accommodate importing exported fields. (json)
+      // todo write test for this.
       $field['address_options'] = json_decode( $field['address_options'] );
       $field['address_layout']  = json_decode( $field['address_layout'] );
     } else {
