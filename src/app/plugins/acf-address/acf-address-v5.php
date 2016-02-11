@@ -280,8 +280,15 @@ class acf_field_address extends acf_field {
   function update_field( $field ) {
     $fieldKey = $this->getKey( $field );
 
-    $field['address_options'] = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_options'] ) );
-    $field['address_layout']  = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_layout'] ) );
+    if(!array_key_exists('acfAddressWidget', $_POST)) {
+      // This branch is to accommodate importing exported fields. (json)
+      $field['address_options'] = json_decode( $field['address_options'] );
+      $field['address_layout']  = json_decode( $field['address_layout'] );
+    } else {
+      // This branch is to accommodate regular field updates through the ui via POST
+      $field['address_options'] = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_options'] ) );
+      $field['address_layout']  = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_layout'] ) );
+    }
 
     return $field;
   }
