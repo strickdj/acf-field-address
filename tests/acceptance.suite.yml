@@ -8,6 +8,8 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - Db
-        - PhpBrowser:
+        - WebDriver:
             url: http://acfaddress.dev
+            browser: phantomjs
+            window_size: 1024x1024
         - \Helper\Acceptance
