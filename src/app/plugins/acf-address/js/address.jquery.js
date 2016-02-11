@@ -162,8 +162,8 @@
         $(items).each(function (col, obj) {
           $ul.append($('<li></li>')
             .data(obj)
-            .text(obj.label))
-            .attr('id', `${obj.id}-li-movable-${widgetCount}`)
+            .text(obj.label)
+            .attr('id', `${obj.id}-li-movable-${widgetCount}`))
         })
 
       })

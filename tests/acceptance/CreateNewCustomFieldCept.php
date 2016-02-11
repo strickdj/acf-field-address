@@ -12,6 +12,7 @@ $I->seeElement('.acf-address-1-row');
 $I->wantTo('make changes to the default address settings.');
 // has the form ${obj.id}-${widgetCount}
 $I->uncheckOption('#street2-1');
+$I->wait(1);
 // has the form ${obj.id}-li-movable-${widgetCount}
 $I->dontSeeElement('#street2-li-movable-1');
 
