@@ -28,17 +28,13 @@ class AcceptanceTester extends \Codeception\Actor
   {
     $I = $this;
 
-    if ($I->loadSessionSnapshot('login')) {
-      return;
-    }
-
     $I->amOnPage('/wp/wp-login.php');
+
     $I->submitForm('#loginform', [
       'log' => $name,
       'pwd' => $password
     ]);
 
-    $I->saveSessionSnapshot('login');
   }
 
 }

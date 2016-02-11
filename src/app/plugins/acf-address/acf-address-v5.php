@@ -104,9 +104,8 @@ class acf_field_address extends acf_field {
     } else {
       $matches = array();
       preg_match( '/\[(.*?)\]/', $field['prefix'], $matches );
-      $parts = str_replace( '[', '', $matches[0] );
 
-      return str_replace( ']', '', $parts );
+      return 'field_'.$matches[1];
     }
 
   }
@@ -256,6 +255,7 @@ class acf_field_address extends acf_field {
   }
 
   /**
+   * This function is for backwards compatibility with php version 5.3
    * @param $val
    * @return mixed|string|void
    */
@@ -278,11 +278,12 @@ class acf_field_address extends acf_field {
    * @return    $field
    */
   function update_field( $field ) {
-    $fieldKey = $field['key'];
+    $fieldKey = $this->getKey( $field );
 
-    if ( ! isset( $_POST['acfAddressWidget'][ $fieldKey ] ) ) {
-      $fieldKey = $field['ID'];
-    }
+//    var_dump($field);
+//    var_dump($_POST['acfAddressWidget']);
+//    var_dump($_POST['acfAddressWidget'][ $fieldKey ]);
+//    die;
 
     $field['address_options'] = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_options'] ) );
     $field['address_layout']  = json_decode( stripslashes( $_POST['acfAddressWidget'][ $fieldKey ]['address_layout'] ) );

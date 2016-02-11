@@ -12,4 +12,5 @@ modules:
             url: http://acfaddress.dev
             browser: phantomjs
             window_size: 1024x1024
+            clear_cookies: false
         - \Helper\Acceptance
