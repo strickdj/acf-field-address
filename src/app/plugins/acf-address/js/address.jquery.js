@@ -163,6 +163,7 @@
           $ul.append($('<li></li>')
             .data(obj)
             .text(obj.label))
+            .attr('id', `${obj.id}-li-movable-${widgetCount}`)
         })
 
       })
@@ -301,7 +302,7 @@
 
         let $tr = $('<tr></tr>')
 
-        let $tdEnabled = $('<td></td>').append(makeInput('checkbox', obj.enabled, obj).data('col', 'enabled'))
+        let $tdEnabled = $('<td></td>').append(makeInput('checkbox', obj.enabled, obj).data('col', 'enabled').attr('id', `${obj.id}-${widgetCount}`))
         let $tdLabel = $('<td></td>').append(makeInput('text', obj.label, obj).data('col', 'label'))
         let $tdDefault = $('<td></td>').append(makeInput('text', obj.defaultValue, obj).data('col', 'defaultValue'))
         let $tdCssClass = $('<td></td>').append(makeInput('text', obj.cssClass, obj).data('col', 'cssClass'))

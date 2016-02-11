@@ -9,14 +9,19 @@ $I->selectOption('form select.field-type', 'address');
 $I->wait(2);
 $I->seeElement('.acf-address-1-row');
 
-$I->wantTo('make changes to the default address settings.');
-// has the form ${obj.id}-${widgetCount}
-$I->uncheckOption('#street2-1');
-// has the form ${obj.id}-li-movable-${widgetCount}
-$I->dontSeeElement('#street2-li-movable-1');
-
 $I->click('#publish');
 $I->see('Field group updated.');
-$I->wantTo('make sure my changes were persisted.');
+$I->wantTo('make changes to the field.');
+$I->click('acf address custom test field');
+$I->wait(1);
+// has the form ${obj.id}-${widgetCount}
+$I->uncheckOption('#street2-1');
+$I->wait(1);
+// has the form ${obj.id}-li-movable-${widgetCount}
+$I->dontSeeElement('#street2-li-movable-1');
+$I->click('#publish');
+$I->see('Field group updated.');
+$I->click('acf address custom test field');
+$I->wait(1);
 $I->dontSeeCheckboxIsChecked('#street2-1');
 $I->dontSeeElement('#street2-li-movable-1');
