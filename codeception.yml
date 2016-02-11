@@ -15,7 +15,7 @@ extensions:
 modules:
     config:
         Db:
-            dsn: ''
-            user: ''
-            password: ''
-            dump: tests/_data/dump.sql
+          dsn: 'mysql:host=127.0.0.1;port=33060;dbname=acfaddress'
+          user: 'homestead'
+          password: 'secret'
+          dump: tests/_data/dump.sql

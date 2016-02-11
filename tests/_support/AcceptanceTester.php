@@ -23,4 +23,20 @@ class AcceptanceTester extends \Codeception\Actor
    /**
     * Define custom actions here
     */
+
+  public function login($name, $password)
+  {
+    $I = $this;
+
+//    if ($I->loadSessionSnapshot('login')) return;
+
+    $I->amOnPage('/wp/wp-login.php');
+    $I->submitForm('#loginform', [
+      'log' => $name,
+      'pwd' => $password
+    ]);
+
+//    $I->saveSessionSnapshot('login');
+  }
+
 }
