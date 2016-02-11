@@ -12,6 +12,16 @@
     }
   ],
   "type": "wordpress-plugin",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wpackagist.org"
+    },
+    {
+      "type": "git",
+      "url": "git@bitbucket.org:simadmin/acf-plugin-mirror.git"
+    }
+  ],
   "autoload-dev": {
     "classmap": [
       "tests/TestCase.php"
@@ -22,6 +32,28 @@
     "composer/installers": "~1.0.12"
   },
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "codeception/codeception": "*",
+    "simadmin/acf-mirror": "5.3.4",
+    "johnpbloch/wordpress": "4.4.2",
+    "vlucas/phpdotenv": "^2.0.1",
+    "phpunit/phpunit": "*",
+    "symfony/debug": "^3.0",
+    "site5/phantoman": "^1.0",
+    "jakoch/phantomjs-installer": "^2.1"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ],
+    "post-update-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "src/app/plugins/{$name}/": ["type:wordpress-plugin"],
+      "web/app/themes/{$name}/": ["type:wordpress-theme"]
+    },
+    "wordpress-install-dir": "src/wp"
   }
 }

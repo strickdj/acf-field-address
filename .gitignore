@@ -5,3 +5,14 @@
 
 # ignore composer.lock
 composer.lock
+
+src/app/plugins/*
+!src/app/plugins/acf-address
+
+src/wp/*
+
+.env
+
+src/app/plugins/acf-address/dist/*
+!src/app/plugins/acf-address/dist/.gitkeep
+tests/_output/*

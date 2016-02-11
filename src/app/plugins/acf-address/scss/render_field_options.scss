@@ -1,0 +1,118 @@
+// colors
+$table-bg: #fefefe;
+$table-border-color: #444;
+$body-bg: #ffffff;
+
+$table-cell-padding: 3px;
+
+$line-height-base: 25px;
+$line-height-computed: 10px;
+$screen-xs-max: 768px;
+
+.acfAddressWidget {
+
+  ul {
+    display: block;
+    min-height: 50px;
+    background: #444444;
+
+    &:last-child {
+      opacity: .7;
+
+      li {
+        opacity: .7;
+      }
+    }
+
+    li {
+      padding: 5px;
+      margin: 5px;
+      cursor: move;
+      background: #ffffff;
+      list-style-type: none;
+      display: inline-block;
+      min-width: 70px;
+      text-align: center;
+    }
+
+  }
+
+  //
+  // Tables
+  // --------------------------------------------------
+
+  table {
+    background-color: $table-bg;
+  }
+  th {
+    text-align: left;
+  }
+
+  // Baseline styles
+
+  table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: $line-height-computed;
+    // Cells
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding: $table-cell-padding;
+          line-height: $line-height-base;
+          vertical-align: top;
+          border-top: 1px solid $table-border-color;
+        }
+      }
+    }
+    // Bottom align for column headings
+    > thead > tr > th {
+      vertical-align: bottom;
+      border-bottom: 2px solid $table-border-color;
+    }
+    // Remove top border from thead by default
+    > caption + thead,
+    > colgroup + thead,
+    > thead:first-child {
+      > tr:first-child {
+        > th,
+        > td {
+          border-top: 0;
+        }
+      }
+    }
+    // Account for multiple tbody instances
+    > tbody + tbody {
+      border-top: 2px solid $table-border-color;
+    }
+
+    // Nesting
+    .table {
+      background-color: $body-bg;
+    }
+  }
+
+  // Table cell sizing
+  //
+  // Reset default table behavior
+
+  table col[class*="col-"] {
+    position: static; // Prevent border hiding in Firefox and IE9/10 (see https://github.com/twbs/bootstrap/issues/11623)
+    float: none;
+    display: table-column;
+  }
+  table {
+    td,
+    th {
+      &[class*="col-"] {
+        position: static; // Prevent border hiding in Firefox and IE9/10 (see https://github.com/twbs/bootstrap/issues/11623)
+        float: none;
+        display: table-cell;
+      }
+    }
+  }
+
+}
