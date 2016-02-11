@@ -28,7 +28,9 @@ class AcceptanceTester extends \Codeception\Actor
   {
     $I = $this;
 
-//    if ($I->loadSessionSnapshot('login')) return;
+    if ($I->loadSessionSnapshot('login')) {
+      return;
+    }
 
     $I->amOnPage('/wp/wp-login.php');
     $I->submitForm('#loginform', [
@@ -36,7 +38,7 @@ class AcceptanceTester extends \Codeception\Actor
       'pwd' => $password
     ]);
 
-//    $I->saveSessionSnapshot('login');
+    $I->saveSessionSnapshot('login');
   }
 
 }
