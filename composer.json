@@ -34,7 +34,7 @@
   "require-dev": {
     "codeception/codeception": "*",
     "simadmin/acf-mirror": "5.3.4",
-    "johnpbloch/wordpress": "4.4.1",
+    "johnpbloch/wordpress": "4.4.2",
     "vlucas/phpdotenv": "^2.0.1",
     "phpunit/phpunit": "*",
     "symfony/debug": "^3.0",
