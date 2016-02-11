@@ -33,8 +33,7 @@
     // merge defaults and passed arguments
     let settings = $.extend(defaults, options)
 
-    // closure scope so its absolutely clear
-    let closure = {
+    let gridInfo = {
       $el: $el,
       layout: settings.layout,
       rowClass: settings.rowClass,
@@ -49,11 +48,11 @@
 
       let positions = []
 
-      closure.$el.find('.' + closure.rowClass).each(function (rowIndex, row) {
+      gridInfo.$el.find('.' + gridInfo.rowClass).each(function (rowIndex, row) {
 
         let r = []
 
-        $(row).find(closure.sortableElement).each(function (col, item) {
+        $(row).find(gridInfo.sortableElement).each(function (col, item) {
 
           let $item = $(item)
 
@@ -77,7 +76,7 @@
 
       })
 
-      closure.$inputElement.attr('value', JSON.stringify(positions))
+      gridInfo.$inputElement.attr('value', JSON.stringify(positions))
 
     }
 
@@ -99,7 +98,7 @@
         label = e.target.value
 
       if ($(e.target).data('col') === 'label') {
-        closure.$el.find('li').each(function (index, element) {
+        gridInfo.$el.find('li').each(function (index, element) {
           $el = $(element)
           if ($el.data().id === id) {
             $el.data('label', label)
@@ -114,14 +113,14 @@
 
       let id = e.data.id,
         targetData = $(e.target).data(),
-        $lastUl = closure.$el.find('.' + closure.rowClass).last()
+        $lastUl = gridInfo.$el.find('.' + gridInfo.rowClass).last()
 
       if (e.target.checked) {
 
         // check to see if its in the $detachedEls object
-        if (closure.$detachedEls.hasOwnProperty(id)) {
+        if (gridInfo.$detachedEls.hasOwnProperty(id)) {
           // used the saved one
-          $lastUl.append(closure.$detachedEls[id])
+          $lastUl.append(gridInfo.$detachedEls[id])
         } else {
           // create the element from scratch
           $lastUl.append($('<li></li>')
@@ -134,10 +133,10 @@
 
       } else {
 
-        closure.$el.find('li').each(function (index, element) {
+        gridInfo.$el.find('li').each(function (index, element) {
           $el = $(element)
           if ($el.data().id === id) {
-            closure.$detachedEls[id] = $el
+            gridInfo.$detachedEls[id] = $el
             $el.detach()
           }
         })
@@ -151,14 +150,14 @@
 
     let buildLayout = function () {
 
-      closure.$el.append(closure.$inputElement)
+      gridInfo.$el.append(gridInfo.$inputElement)
 
-      $(closure.layout).each(function (row, items) {
+      $(gridInfo.layout).each(function (row, items) {
         let $ul = $('<ul></ul>')
-          .addClass(closure.rowClass)
-        closure.$el.append($ul)
+          .addClass(gridInfo.rowClass)
+        gridInfo.$el.append($ul)
 
-        makeSortable($ul, { connectWith: '.' + closure.rowClass })
+        makeSortable($ul, { connectWith: '.' + gridInfo.rowClass })
 
         $(items).each(function (col, obj) {
           $ul.append($('<li></li>')
