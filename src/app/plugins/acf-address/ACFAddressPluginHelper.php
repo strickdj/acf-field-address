@@ -72,7 +72,7 @@ class ACFAddressPluginHelper
           $html .= $options->{$key}->separator;
         }
 
-        $html .= "</span>";
+        $html .= "</span> ";
 
       }
 
