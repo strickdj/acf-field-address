@@ -108,12 +108,9 @@ gulp.task('db:create', dbManager.create(process.env.DB_NAME))
 
 gulp.task('db:drop', dbManager.drop(process.env.DB_NAME))
 
-gulp.task('db:populate', cb => {
-  gulp.src('./tests/_data/dump.sql')
+gulp.task('db:populate', () => {
+  return gulp.src('./tests/_data/dump.sql')
     .pipe(gmcfp(dbConfig.user, dbConfig.password, dbConfig.host, dbConfig.port, dbConfig.database))
-    .pipe(gulp.dest('./tests/fixtures'))
-
-  cb()
 })
 
 /**
