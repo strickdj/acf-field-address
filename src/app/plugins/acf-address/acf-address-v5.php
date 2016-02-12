@@ -174,8 +174,6 @@ class acf_field_address extends acf_field {
 
     $asset_path = $this->helper->get_assets_uri();
 
-    // todo render_field.css never gets used why?
-
     wp_register_script( 'acf_a_f_render_field', $asset_path . $manifest['render_field.js'] );
     wp_enqueue_script( 'acf_a_f_render_field' );
 

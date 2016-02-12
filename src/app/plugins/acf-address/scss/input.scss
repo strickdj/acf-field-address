@@ -1,4 +1,11 @@
 /* Advanced Custom Fields Addon - Address Field */
+div.acf-address-field {
+  li {
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 5px;
+  }
+}
 
 /* Field Options Screen */
 tr.field_option_address-field .address_layout ul {
@@ -37,5 +44,3 @@ tr.field_option_address-field .address_layout li.disabled {
   float: left;
   padding: 5px 10px 0 0;
 }
-
-/* get_value() and shortcode display */
