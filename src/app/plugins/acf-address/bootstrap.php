@@ -51,3 +51,8 @@ function get_acf_address_data() {
 
   die();
 }
+
+// is testing env or is development??
+if(false) {
+  require 'test_export_import_group.php';
+}
