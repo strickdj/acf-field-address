@@ -1,6 +1,6 @@
 <?php
 
-add_action( '', function() {
+add_action( 'after_setup_theme', function() {
 
   if( function_exists('acf_add_local_field_group') ):
 
