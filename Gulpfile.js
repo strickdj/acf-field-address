@@ -121,10 +121,8 @@ gulp.task('db:populate', cb => {
  */
 gulp.task('dump:local', (cb) => {
   let config = Object.assign({}, dbConfig, { dest:'./tests/_data/dump.sql' })
-  mysqldump(config, err => {
-    if(err) throw new Error(err)
+  return mysqldump(config, (err) => {
+    if(err) cb(err)
     process.exit(0)
   })
-
-  cb()
 })
