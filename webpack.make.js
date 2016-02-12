@@ -16,6 +16,7 @@ module.exports = function makeWebpackConfig(options, ACF_ADDRESS_ROOT) {
   config.entry = {
     address_jquery: `./${ACF_ADDRESS_ROOT}/js/address.jquery`,
     input: `./${ACF_ADDRESS_ROOT}/js/input`,
+    render_field: `./${ACF_ADDRESS_ROOT}/js/render_field`,
     render_field_options: `./${ACF_ADDRESS_ROOT}/js/render_field_options`
   }
 
