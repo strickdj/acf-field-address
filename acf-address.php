@@ -4,7 +4,7 @@
 Plugin Name: Advanced Custom Fields: Address
 Plugin URI: https://github.com/strickdj/acf-field-address
 Description: An Advanced Custom Field for working with address information.
-Version: 5.0.6
+Version: 5.1.0
 Author: Daris Strickland
 Author URI: http://daris-strickland.com/
 License: GPLv2 or later
