@@ -256,22 +256,25 @@ class acf_field_address extends acf_field {
 
   public function load_value($value, $post_id, $field) {
     $new_value = [];
-    foreach($value as $k => $v) {
-      switch($k) {
-        case 'address1':
-          $new_value['street1'] = $v;
-          break;
-        case 'address2':
-          $new_value['street2'] = $v;
-          break;
-        case 'address3':
-          $new_value['street3'] = $v;
-          break;
-        case 'postal_code':
-          $new_value['zip'] = $v;
-          break;
-        default:
-          $new_value[$k] = $v;
+
+    if(is_array($value)) {
+      foreach($value as $k => $v) {
+        switch($k) {
+          case 'address1':
+            $new_value['street1'] = $v;
+            break;
+          case 'address2':
+            $new_value['street2'] = $v;
+            break;
+          case 'address3':
+            $new_value['street3'] = $v;
+            break;
+          case 'postal_code':
+            $new_value['zip'] = $v;
+            break;
+          default:
+            $new_value[$k] = $v;
+        }
       }
     }
 
