@@ -66,7 +66,7 @@ class ACFAddressPluginHelper
 
         $html .= sprintf( "<span class='%s'>", $options->{$key}->cssClass );
 
-        $html .= $value[ $key ];
+        $html .= isset($value[ $key ]) ? $value[ $key ] : '';
 
         if ( $options->{$key}->separator !== '' ) {
           $html .= $options->{$key}->separator;

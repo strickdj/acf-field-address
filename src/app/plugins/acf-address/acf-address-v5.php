@@ -145,7 +145,7 @@ class acf_field_address extends acf_field {
 
     <div class="acf-address-field"
          data-name="<?php echo $field['name']; ?>"
-         data-value="<?php echo esc_js( json_encode( $field['value'] ) ); ?>"
+         data-value="<?php echo esc_js( json_encode( $field['value'], JSON_UNESCAPED_UNICODE ) ); ?>"
          data-output-type="<?php echo $field['output_type']; ?>"
          data-layout="<?php echo esc_js( $address_layout ); ?>"
          data-options="<?php echo esc_js( $address_options ); ?>"
@@ -250,6 +250,33 @@ class acf_field_address extends acf_field {
     }
 
     return $field;
+  }
+
+  public function load_value($value, $post_id, $field) {
+    $new_value = [];
+
+    if(is_array($value)) {
+      foreach($value as $k => $v) {
+        switch($k) {
+          case 'address1':
+            $new_value['street1'] = $v;
+            break;
+          case 'address2':
+            $new_value['street2'] = $v;
+            break;
+          case 'address3':
+            $new_value['street3'] = $v;
+            break;
+          case 'postal_code':
+            $new_value['zip'] = $v;
+            break;
+          default:
+            $new_value[$k] = $v;
+        }
+      }
+    }
+
+    return $new_value;
   }
 
   /**
