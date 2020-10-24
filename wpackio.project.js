@@ -18,25 +18,20 @@ module.exports = {
   },
   // Files we need to compile, and where to put
   files: [
-    // If this has length === 1, then single compiler
-    // {
-    // 	name: 'mobile',
-    // 	entry: {
-    // 		// mention each non-interdependent files as entry points
-    //      // The keys of the object will be used to generate filenames
-    //      // The values can be string or Array of strings (string|string[])
-    //      // But unlike webpack itself, it can not be anything else
-    //      // <https://webpack.js.org/concepts/#entry>
-    //      // You do not need to worry about file-size, because we would do
-    //      // code splitting automatically. When using ES6 modules, forget
-    //      // global namespace pollutions 😉
-    // 		vendor: './src/mobile/vendor.js', // Could be a string
-    // 		main: ['./src/mobile/index.js'], // Or an array of string (string[])
-    // 	},
-    // 	// Extra webpack config to be passed directly
-    // 	webpackConfig: undefined,
-    // },
-    // If has more length, then multi-compiler
+    {
+    	name: 'foo',
+    	entry: {
+    		 // mention each non-interdependent files as entry points
+         // The keys of the object will be used to generate filenames
+         // The values can be string or Array of strings (string|string[])
+         // But unlike webpack itself, it can not be anything else
+         // <https://webpack.js.org/concepts/#entry>
+    		// vendor: './assets/js/vendor.js', // Could be a string
+    		main: ['./assets/js/foo.js'], // Or an array of string (string[])
+    	},
+    	// Extra webpack config to be passed directly
+    	webpackConfig: undefined,
+    },
   ],
   // Output path relative to the context directory
   // We need relative path here, else, we can not map to publicPath
@@ -68,7 +63,7 @@ module.exports = {
   // Won't hurt because we use PHP to automate loading
   optimizeSplitChunks: true,
   // Usually PHP and other files to watch and reload when changed
-  watch: './inc|includes/**/*.php',
+  watch: './src/**/*.php',
   // Files that you want to copy to your ultimate theme/plugin package
   // Supports glob matching from minimatch
   // @link <https://github.com/isaacs/minimatch#usage>
@@ -86,4 +81,9 @@ module.exports = {
   ],
   // Path to package directory, relative to the root
   packageDirPath: 'package',
+  // Hook into babeloverride so that we can add react-hot-loader plugin
+  jsBabelOverride: defaults => ({
+    ...defaults,
+    plugins: ['react-hot-loader/babel'],
+  }),
 }

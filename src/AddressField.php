@@ -11,54 +11,38 @@ class AddressField extends \acf_field
      */
     protected $helper;
 
-    /*
-    *  This function will setup the field type data
-    */
+    /**
+     * AddressField constructor.
+     * Setup the field type data
+     *
+     * @param $settings
+     * @param Helper $helper
+     */
     public function __construct($settings, Helper $helper)
     {
         $this->helper = $helper;
 
-        /*
-        *  name (string) Single word, no spaces. Underscores allowed
-        */
+        /** @var string name Single word, no spaces. Underscores allowed */
         $this->name = 'address';
 
-        /*
-        *  label (string) Multiple words, can include spaces, visible when selecting a field type
-        */
+        /** @var string label Multiple words, can include spaces, visible when selecting a field type */
         $this->label = __('Address', 'acf-address');
 
-        /*
-        *  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
-        */
+        /** @var string category ENUM: basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME */
         $this->category = 'basic';
 
-        /*
-        *  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
-        */
-        // todo fix this garbage
+        // todo fix
+        /** @var array defaults Array of default settings which are merged into the field object. These are used later in settings */
         $this->defaults = array(
             'output_type' => 'html',
             'address_layout' => '[[{"id":"street1","label":"Street 1"}],[{"id":"street2","label":"Street 2"}],[{"id":"street3","label":"Street 3"}],[{"id":"city","label":"City"},{"id":"state","label":"State"},{"id":"zip","label":"Postal Code"},{"id":"country","label":"Country"}],[]]',
             'address_options' => '{"street1":{"id":"street1","label":"Street 1","defaultValue":"","enabled":true,"cssClass":"street1","separator":""},"street2":{"id":"street2","label":"Street 2","defaultValue":"","enabled":true,"cssClass":"street2","separator":""},"street3":{"id":"street3","label":"Street 3","defaultValue":"","enabled":true,"cssClass":"street3","separator":""},"city":{"id":"city","label":"City","defaultValue":"","enabled":true,"cssClass":"city","separator":","},"state":{"id":"state","label":"State","defaultValue":"","enabled":true,"cssClass":"state","separator":""},"zip":{"id":"zip","label":"Postal Code","defaultValue":"","enabled":true,"cssClass":"zip","separator":""},"country":{"id":"country","label":"Country","defaultValue":"","enabled":true,"cssClass":"country","separator":""}}'
         );
 
-        /*
-        *  l10n (array) Array of strings that are used in JavaScript. This allows JS strings to be translated in PHP and loaded via:
-        *  var message = acf._e('FIELD_NAME', 'error');
-        */
-        $this->l10n = array(
-            'error' => __('Error! Please enter a higher value', 'TEXTDOMAIN'),
-        );
-
-        /*
-        *  settings (array) Store plugin settings (url, path, version) as a reference for later use with assets
-        */
+        /** @var array settings Store plugin settings (url, path, version) as a reference for later use with assets */
         $this->settings = $settings;
 
-        // do not delete!
         parent::__construct();
-
     }
 
     /**
@@ -69,7 +53,6 @@ class AddressField extends \acf_field
      */
     public function render_field_settings($field)
     {
-
         $fk = $this->getKey($field);
 
         acf_render_field_setting($field, array(
@@ -85,7 +68,7 @@ class AddressField extends \acf_field
             )
         ));
 
-        // We cant use acf_render_field_setting for our super custom field edit screen
+        // We cant use acf_render_field_setting for our custom field edit screen
         ?>
 
         <script>
@@ -157,19 +140,18 @@ class AddressField extends \acf_field
      */
     public function input_admin_enqueue_scripts()
     {
-
-        $manifest = $this->helper->get_assets_manifest();
-
-        $asset_path = $this->helper->get_assets_uri();
-
-        wp_register_script('acf_a_f_render_field', $asset_path . $manifest['render_field.js']);
-        wp_enqueue_script('acf_a_f_render_field');
-
-        if (array_key_exists('input.css', $manifest)) {
-            wp_register_style('acf_a_f_input_styles', $asset_path . $manifest['input.css']);
-            wp_enqueue_style('acf_a_f_input_styles');
-        }
-
+        // todo implement
+//        $manifest = $this->helper->get_assets_manifest();
+//
+//        $asset_path = $this->helper->get_assets_uri();
+//
+//        wp_register_script('acf_a_f_render_field', $asset_path . $manifest['render_field.js']);
+//        wp_enqueue_script('acf_a_f_render_field');
+//
+//        if (array_key_exists('input.css', $manifest)) {
+//            wp_register_style('acf_a_f_input_styles', $asset_path . $manifest['input.css']);
+//            wp_enqueue_style('acf_a_f_input_styles');
+//        }
     }
 
     /**
@@ -180,26 +162,24 @@ class AddressField extends \acf_field
      */
     public function field_group_admin_enqueue_scripts()
     {
-
-        $manifest = $this->helper->get_assets_manifest();
-
-        $asset_path = $this->helper->get_assets_uri();
-
-        if (array_key_exists('render_field_options.css', $manifest)) {
-            wp_register_style('acf_a_f_render_field_options_styles', $asset_path . $manifest['render_field_options.css']);
-            wp_enqueue_style('acf_a_f_render_field_options_styles');
-        }
-
-        wp_register_script('acf_a_f_address_field', $asset_path . $manifest['address_jquery.js'], array('jquery-ui-sortable'));
-        wp_register_script('acf_a_f_input', $asset_path . $manifest['input.js']);
-        wp_register_script('acf_a_f_render_field_options', $asset_path . $manifest['render_field_options.js']);
-        wp_enqueue_script('acf_a_f_address_field');
-        wp_enqueue_script('acf_a_f_render_field_options');
-
-        wp_localize_script('acf_a_f_address_field', 'acf_a_f_bundle_data', [
-            'publicAssetsPath' => $this->helper->get_assets_uri()
-        ]);
-
+//        $manifest = $this->helper->get_assets_manifest();
+//
+//        $asset_path = $this->helper->get_assets_uri();
+//
+//        if (array_key_exists('render_field_options.css', $manifest)) {
+//            wp_register_style('acf_a_f_render_field_options_styles', $asset_path . $manifest['render_field_options.css']);
+//            wp_enqueue_style('acf_a_f_render_field_options_styles');
+//        }
+//
+//        wp_register_script('acf_a_f_address_field', $asset_path . $manifest['address_jquery.js'], array('jquery-ui-sortable'));
+//        wp_register_script('acf_a_f_input', $asset_path . $manifest['input.js']);
+//        wp_register_script('acf_a_f_render_field_options', $asset_path . $manifest['render_field_options.js']);
+//        wp_enqueue_script('acf_a_f_address_field');
+//        wp_enqueue_script('acf_a_f_render_field_options');
+//
+//        wp_localize_script('acf_a_f_address_field', 'acf_a_f_bundle_data', [
+//            'publicAssetsPath' => $this->helper->get_assets_uri()
+//        ]);
     }
 
     /**

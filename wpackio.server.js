@@ -13,7 +13,7 @@ module.exports = {
 	host: undefined,
 	// Your WordPress development server address
 	// This is super important
-	proxy: 'http://localhost:8080',
+	proxy: 'http://wp52.test',
 	// PORT on your localhost where you would want live server to hook
 	port: 3000,
 	// UI passed directly to browsersync

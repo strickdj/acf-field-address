@@ -9,7 +9,10 @@
     "url": "https://github.com/strickdj/acf-field-address"
   },
   "dependencies": {
-    "@wpackio/entrypoint": "^5.0.0"
+    "@wpackio/entrypoint": "^5.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hot-loader": "^4.13.0"
   },
   "devDependencies": {
     "@wpackio/scripts": "^5.0.0",
