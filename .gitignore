@@ -2,17 +2,5 @@
 .idea
 /vendor
 /node_modules
-
-# ignore composer.lock
 composer.lock
-
-src/app/themes/*
-!src/app/themes/.gitkeep
-src/app/plugins/*
-!src/app/plugins/acf-address
-
-src/wp/*
-
 .env
-
-tests/_output/*

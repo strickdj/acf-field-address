@@ -1,0 +1,8 @@
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.browserslistrc export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/postcss.config.js export-ignore
+/wpackio.project.js export-ignore
+/wpackio.server.js export-ignore

@@ -3,7 +3,7 @@
   "description": "Advanced Custom Fields Address Plugin",
   "keywords": ["wordpress", "plugin", "acf", "address"],
   "homepage": "https://github.com/strickdj/acf-field-address",
-  "license": "MIT",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Daris Strickland",
@@ -12,53 +12,16 @@
     }
   ],
   "type": "wordpress-plugin",
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "http://wpackagist.org"
-    },
-    {
-      "type": "git",
-      "url": "git@bitbucket.org:simadmin/acf-plugin-mirror.git"
-    },
-    {
-      "type": "git",
-      "url": "git@github.com:strickdj/ACF-Address-Test-Theme.git"
-    }
-  ],
   "autoload-dev": {
-    "classmap": [
-      "tests/TestCase.php"
-    ]
+    "psr-4": {
+      "Strickdj\\AddressField\\": "src/"
+    }
   },
   "require": {
-    "php": ">=5.3.2",
-    "composer/installers": "~1.0.12"
+    "php": ">=7.1"
   },
   "require-dev": {
-    "codeception/codeception": "*",
-    "simadmin/acf-mirror": "5.3.4",
-    "strickdj/ACF-Address-Test-Theme": "dev-master",
-    "johnpbloch/wordpress": "4.4.2",
-    "vlucas/phpdotenv": "^2.0.1",
-    "phpunit/phpunit": "*",
-    "symfony/debug": "^3.0",
-    "site5/phantoman": "^1.0",
-    "jakoch/phantomjs-installer": "^2.1"
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "PhantomInstaller\\Installer::installPhantomJS"
-    ],
-    "post-update-cmd": [
-      "PhantomInstaller\\Installer::installPhantomJS"
-    ]
-  },
-  "extra": {
-    "installer-paths": {
-      "src/app/plugins/{$name}/": ["type:wordpress-plugin"],
-      "src/app/themes/{$name}/": ["type:wordpress-theme"]
-    },
-    "wordpress-install-dir": "src/wp"
+    "composer/installers": "~1.0.12",
+    "wpackio/enqueue": "^2.2"
   }
 }

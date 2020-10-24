@@ -8,25 +8,18 @@ An Advanced Custom Field. Adds an address field type.
 
 This ACF field type is compatible with:
 
-* ACF 5.3.4 and up
-* ACF 4 (no longer supported)
+* ACF 5.9.1 and up
 
 ## Installation
-
-### via Composer
-1. Add a line to your repositories array:
-`{ "type": "git", "url": "https://github.com/strickdj/acf-field-address" }`
-2. Add a line to your require block:
-`"strickdj/acf-address": "dev-master"`
-3. Run: `composer update`
-
-### Manual
-
 1. Copy the plugin folder into your `plugins` folder.
 2. Activate the plugin via the plugins admin page.
 3. Create a new field via ACF and select the Address type.
 
 ## Changelog
+6.0.0 - Drop support for ACF 4
+   
+  - Drop support for PHP 7.0 and below
+    
 5.1.0 - Fixed bug preventing the creation of new Address fields.
 
   - Fixed bug rendering the field to html
