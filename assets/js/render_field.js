@@ -1,3 +1,5 @@
+require('../scss/input.scss')
+
 jQuery(document).ready(function ($) {
   let $addressWidget = $('.acf-address-field')
 
@@ -6,7 +8,8 @@ jQuery(document).ready(function ($) {
       name = $el.data('name'),
       value = $el.data('value'),
       layout = $el.data('layout'),
-      options = $el.data('options')
+      options = $el.data('options'),
+      required = $el.data('required') === 1
 
     value = $.extend({
       street1: null,
@@ -31,6 +34,7 @@ jQuery(document).ready(function ($) {
           .prop('name', propName)
           .prop('value', value[obj.id])
           .prop('placeholder', options[obj.id].defaultValue)
+          .prop('required', required)
         )
         $ul.append($li)
       })

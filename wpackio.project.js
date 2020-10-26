@@ -19,18 +19,24 @@ module.exports = {
   // Files we need to compile, and where to put
   files: [
     {
-    	name: 'foo',
+    	name: 'address.jquery.js',
     	entry: {
-    		 // mention each non-interdependent files as entry points
-         // The keys of the object will be used to generate filenames
-         // The values can be string or Array of strings (string|string[])
-         // But unlike webpack itself, it can not be anything else
-         // <https://webpack.js.org/concepts/#entry>
-    		// vendor: './assets/js/vendor.js', // Could be a string
-    		main: ['./assets/js/foo.js'], // Or an array of string (string[])
+    		 //https://wpack.io/apis/project-configuration/#files-array
+    		main: ['./assets/js/address.jquery.js'],
     	},
-    	// Extra webpack config to be passed directly
-    	webpackConfig: undefined,
+    },    {
+    	name: 'render_field',
+    	entry: {
+    		 //https://wpack.io/apis/project-configuration/#files-array
+    		main: ['./assets/js/render_field.js'],
+    	},
+    },
+    {
+    	name: 'render_field_options',
+    	entry: {
+    		 // https://wpack.io/apis/project-configuration/#files-array
+    		main: ['./assets/js/render_field_options.js'],
+    	},
     },
   ],
   // Output path relative to the context directory

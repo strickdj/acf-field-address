@@ -1,9 +1,5 @@
 (function ($) {
 
-  //let defaults = require('./defaults.service')
-
-  //defaults(window.jQuery)
-
   let widgetCount = 0
 
   // factory function for creating widget closures
@@ -39,7 +35,7 @@
       rowClass: settings.rowClass,
       sortableElement: settings.sortableElement,
       $inputElement: $('<input type="hidden">')
-        .prop('name', 'acfAddressWidget[' + settings.fieldKey + '][address_layout]')
+        .prop('name', settings.layoutInputName)
         .prop('value', JSON.stringify(settings.layout)),
       $detachedEls: {}
     }
@@ -243,7 +239,7 @@
       $inputElement: $('<input type="hidden">')
         .data('val', settings.options)
         .prop('value', JSON.stringify(settings.options))
-        .prop('name', 'acfAddressWidget[' + settings.fieldKey + '][address_options]'),
+        .prop('name', settings.optionsInputName),
       options: settings.options,
       onBlur: onBlurWithAfter,
       onCheck: onCheckWithAfter
@@ -336,35 +332,36 @@
 
     // Call our instance closure
     // to handle multiple elements
-    $this.each(function (index, element) {
-
-      let $element = $(element)
-
-      if ($element.data('acfAddressWidgetized') === true) {
-        return
-      }
-
-      $element.data('acfAddressWidgetized', true)
-
-      let $optionsContainer = $('<div></div>').attr('id', 'options-container')
-      let $layoutContainer = $('<div></div>').attr('id', 'layout-container')
-
-      $element.append($optionsContainer)
-        .append($layoutContainer)
-
-      settings.fieldKey = $element.data('field')
-
-      settings.layout = window.acfAddressWidgetData.address_layout
-
-      settings.options = window.acfAddressWidgetData.address_options
-
-
-      let lc = makeLayout(settings, $layoutContainer)
-
-      settings.onBlur = lc.onBlur
-      settings.onCheck = lc.onCheck
-      makeOptions(settings, $optionsContainer)
-    })
+    // $this.each(function (index, element) {
+    //
+    //   let $element = $(element)
+    //
+    //   if ($element.data('acfAddressWidgetized') === true) {
+    //     return
+    //   }
+    //
+    //   $element.data('acfAddressWidgetized', true)
+    //
+    //   // $element.html('')
+    //
+    //   let $optionsContainer = $('<div></div>').attr('id', 'options-container')
+    //   let $layoutContainer = $('<div></div>').attr('id', 'layout-container')
+    //
+    //   $element.append($optionsContainer)
+    //     .append($layoutContainer)
+    //
+    //   settings.layoutInputName = $element.data('layout-name')
+    //   settings.optionsInputName = $element.data('options-name')
+    //
+    //   settings.layout = $element.data('layout')
+    //   settings.options = $element.data('options')
+    //
+    //   let lc = makeLayout(settings, $layoutContainer)
+    //
+    //   settings.onBlur = lc.onBlur
+    //   settings.onCheck = lc.onCheck
+    //   makeOptions(settings, $optionsContainer)
+    // })
 
     return $this
 

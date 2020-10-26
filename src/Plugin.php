@@ -11,9 +11,9 @@ final class Plugin
     private $field;
 
     /**
-     * @var array
+     * @var \WPackio\Enqueue
      */
-    public $settings;
+    protected $enqueue;
 
     /**
      * Stores the instance of the class
@@ -37,15 +37,15 @@ final class Plugin
         return self::$instance;
     }
 
-
-    public function __construct()
+    private function __construct()
     {
-        // - these will be passed into the field class.
-        $this->settings = [
-            'version' => S_ACFADDRESS_VERSION,
-            'url' => S_ACFADDRESS_PLUGIN_URL,
-            'path' => S_ACFADDRESS_PLUGIN_DIR
-        ];
+        $this->enqueue = new \WPackio\Enqueue(
+            'acfFieldAddress',
+            'dist',
+            S_ACFADDRESS_VERSION,
+            'plugin',
+            S_ACFADDRESS_PLUGIN_FILE
+        );
 
         // include field
         add_action('acf/include_field_types', [$this, 'include_field']);
@@ -53,8 +53,23 @@ final class Plugin
 
     public function include_field($_)
     {
-        $helper = new Helper();
-        $this->field = new AddressField($this->settings, $helper);
+        $this->field = new AddressField(new Helper(), $this->enqueue);
+    }
+
+    public function aenqueue() {
+
+
+        // Enqueue on admin facing pages
+        add_action( 'admin_enqueue_scripts', function() {
+
+            $time = microtime();
+            error_log("{$time}: admin_enqueue_scripts");
+
+
+
+
+        } );
+
     }
 
 }

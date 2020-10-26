@@ -3,11 +3,10 @@ require('../scss/render_field_options.scss')
 jQuery(document).ready(function ($) {
   let acf = window.acf
 
-  // todo init
-  $('.acfAddressWidget').acfAddressWidget()
-  if (typeof acf.add_action !== 'undefined') {
-    acf.add_action('append', function () {
-      $('.acfAddressWidget').acfAddressWidget()
+  if (typeof acf.addAction !== 'undefined') {
+    acf.addAction('new_field/type=addyopts', function (field) {
+      console.log('field', field)
+      field.$el.find('.acfAddressWidget').acfAddressWidget({ field })
     })
   }
 })

@@ -41,9 +41,9 @@ class Helper
 
         $html = '';
 
-        $layout = json_decode($field['address_layout']);
+        $layout = $field['address_layout'];
 
-        $options = json_decode($field['address_options']);
+        $options = $field['address_options'];
 
         $value = array_filter($value);
 
@@ -63,14 +63,14 @@ class Helper
 
             foreach ($row as $colIndex => $item) {
 
-                $key = $item->id;
+                $key = $item['id'];
 
-                $html .= sprintf("<span class='%s'>", $options->{$key}->cssClass);
+                $html .= sprintf("<span class='%s'>", $options[$key]['cssClass']);
 
                 $html .= isset($value[$key]) ? $value[$key] : '';
 
-                if ($options->{$key}->separator !== '') {
-                    $html .= $options->{$key}->separator;
+                if ($options[$key]['separator'] !== '') {
+                    $html .= $options[$key]['separator'];
                 }
 
                 $html .= "</span> ";

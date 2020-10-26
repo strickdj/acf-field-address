@@ -40,7 +40,7 @@ if (!defined('S_ACFADDRESS_PLUGIN_FILE')) {
 
 // Plugin textdomain
 if (!defined('S_ACFADDRESS_TEXT_DOMAIN')) {
-    define('S_ACFADDRESS_TEXT_DOMAIN', 'wpgqlforms');
+    define('S_ACFADDRESS_TEXT_DOMAIN', 'acf-address');
 }
 
 // Plugin autoload
@@ -62,36 +62,6 @@ if (!function_exists('s_acfaddress_init')) {
         if ( defined( 'S_ACFADDRESS_AUTOLOAD' ) && true === S_ACFADDRESS_AUTOLOAD ) {
             require_once S_ACFADDRESS_PLUGIN_DIR . 'vendor/autoload.php';
         }
-
-        $q = new \WPackio\Enqueue(
-            'acfFieldAddress',
-            'dist',
-            S_ACFADDRESS_VERSION,
-            'plugin',
-            __FILE__
-        );
-
-        $enqueue = function() use($q) {
-            $assets = $q->enqueue( 'foo', 'main', [
-                'js' => true,
-                'css' => true,
-                'js_dep' => [],
-                'css_dep' => [],
-                'in_footer' => true,
-                'media' => 'all',
-            ] );
-
-            $entry_point = array_pop( $assets['js'] );
-            wp_localize_script( $entry_point['handle'], 'acfFieldAddress', [
-                'foo' => 'bar'
-            ] );
-        };
-
-        // Enqueue on user facing pages
-        add_action( 'wp_enqueue_scripts', $enqueue );
-
-        // Enqueue on admin facing pages
-        add_action( 'admin_enqueue_scripts', $enqueue );
 
         return \Strickdj\AddressField\Plugin::instance();
     }
